@@ -15,7 +15,17 @@ export function SpeechControls({ text }: SpeechControlsProps) {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Load available voices
+    // Check if speech synthesis is supported
+    if (typeof window === 'undefined' || !window.speechSynthesis) {
+      toast({
+        title: "Not Supported",
+        description: "Text-to-speech is not supported in your browser.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Function to load and set available voices
     function loadVoices() {
       const availableVoices = window.speechSynthesis.getVoices();
       if (availableVoices.length > 0) {
@@ -28,15 +38,23 @@ export function SpeechControls({ text }: SpeechControlsProps) {
       }
     }
 
+    // Load voices immediately in case they're already available
     loadVoices();
+
+    // Also handle the voiceschanged event for browsers that load voices asynchronously
     window.speechSynthesis.onvoiceschanged = loadVoices;
 
+    // Cleanup
     return () => {
-      window.speechSynthesis.cancel();
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
     };
-  }, []);
+  }, [toast]);
 
   const speak = () => {
+    if (!window.speechSynthesis) return;
+
     try {
       const utterance = new SpeechSynthesisUtterance(text);
       const voice = voices.find(v => v.name === selectedVoice);
@@ -68,14 +86,22 @@ export function SpeechControls({ text }: SpeechControlsProps) {
   };
 
   const pause = () => {
-    window.speechSynthesis.pause();
-    setIsPlaying(false);
+    if (window.speechSynthesis) {
+      window.speechSynthesis.pause();
+      setIsPlaying(false);
+    }
   };
 
   const stop = () => {
-    window.speechSynthesis.cancel();
-    setIsPlaying(false);
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      setIsPlaying(false);
+    }
   };
+
+  if (!window.speechSynthesis) {
+    return null;
+  }
 
   return (
     <div className="flex items-center gap-4 my-4">
