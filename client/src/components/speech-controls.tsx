@@ -12,7 +12,6 @@ interface SpeechControlsProps {
 const voiceMap = {
   'en': 'US English Female',
   'hi': 'Hindi Female',
-  'as': 'Hindi Female', // Using Hindi as fallback for Assamese since it's more widely understood in Assam
 };
 
 declare global {

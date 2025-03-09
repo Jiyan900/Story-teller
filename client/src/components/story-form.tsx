@@ -23,7 +23,7 @@ export function StoryForm() {
       animal: undefined,
       theme: undefined,
       content: "",
-      language: "en" 
+      language: "en"
     },
   });
 
@@ -65,9 +65,9 @@ export function StoryForm() {
                   <FormItem>
                     <FormLabel className="text-base">Child's Name</FormLabel>
                     <FormControl>
-                      <Input 
-                        placeholder="Enter name..." 
-                        {...field} 
+                      <Input
+                        placeholder="Enter name..."
+                        {...field}
                         className="h-12 text-base px-4"
                       />
                     </FormControl>
@@ -82,8 +82,8 @@ export function StoryForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base">Favorite Animal</FormLabel>
-                    <Select 
-                      onValueChange={field.onChange} 
+                    <Select
+                      onValueChange={field.onChange}
                       value={field.value}
                       defaultValue={field.value}
                     >
@@ -94,8 +94,8 @@ export function StoryForm() {
                       </FormControl>
                       <SelectContent className="max-h-[300px]">
                         {animals.map((animal) => (
-                          <SelectItem 
-                            key={animal} 
+                          <SelectItem
+                            key={animal}
                             value={animal}
                             className="py-3 text-base cursor-pointer hover:bg-primary/10 focus:bg-primary/10"
                           >
@@ -115,8 +115,8 @@ export function StoryForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base">Story Theme</FormLabel>
-                    <Select 
-                      onValueChange={field.onChange} 
+                    <Select
+                      onValueChange={field.onChange}
                       value={field.value}
                       defaultValue={field.value}
                     >
@@ -127,8 +127,8 @@ export function StoryForm() {
                       </FormControl>
                       <SelectContent className="max-h-[300px]">
                         {storyThemes.map((theme) => (
-                          <SelectItem 
-                            key={theme} 
+                          <SelectItem
+                            key={theme}
                             value={theme}
                             className="py-3 text-base cursor-pointer hover:bg-primary/10 focus:bg-primary/10"
                           >
@@ -149,8 +149,8 @@ export function StoryForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base">Story Language</FormLabel>
-                    <Select 
-                      onValueChange={field.onChange} 
+                    <Select
+                      onValueChange={field.onChange}
                       value={field.value}
                       defaultValue={field.value}
                     >
@@ -160,23 +160,17 @@ export function StoryForm() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent className="max-h-[300px]">
-                        <SelectItem 
+                        <SelectItem
                           value="en"
                           className="py-3 text-base cursor-pointer hover:bg-primary/10 focus:bg-primary/10"
                         >
                           English
                         </SelectItem>
-                        <SelectItem 
+                        <SelectItem
                           value="hi"
                           className="py-3 text-base cursor-pointer hover:bg-primary/10 focus:bg-primary/10"
                         >
                           हिंदी (Hindi)
-                        </SelectItem>
-                        <SelectItem 
-                          value="as"
-                          className="py-3 text-base cursor-pointer hover:bg-primary/10 focus:bg-primary/10"
-                        >
-                          অসমীয়া (Assamese)
                         </SelectItem>
                       </SelectContent>
                     </Select>
@@ -186,8 +180,8 @@ export function StoryForm() {
               />
 
 
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full bg-primary hover:bg-primary/90 h-12 text-base"
                 disabled={form.formState.isSubmitting}
               >

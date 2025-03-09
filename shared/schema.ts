@@ -52,7 +52,7 @@ export const storyFormSchema = insertStorySchema.extend({
   theme: z.enum(storyThemes, {
     required_error: "Please select a theme",
   }),
-  language: z.enum(['en', 'hi', 'as'], { // Changed 'bn' to 'as' for Assamese
+  language: z.enum(['en', 'hi'], {
     required_error: "Please select a language",
   }).default('en'),
 });
