@@ -28,145 +28,158 @@ export function MoodLighting({ theme }: MoodLightingProps) {
       animate={{ opacity: 1 }}
       transition={{ duration: 2, ease: "easeInOut" }}
     >
-      {/* Starfield background */}
+      {/* Dense starfield background with multiple layers */}
+      {[...Array(3)].map((_, layerIndex) => (
+        <motion.div
+          key={`starfield-${layerIndex}`}
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              radial-gradient(${1 + layerIndex}px ${1 + layerIndex}px at ${[...Array(200)].map(() => 
+                `${Math.random() * 100}% ${Math.random() * 100}%`
+              ).join(', ')}, rgba(255, 255, 255, ${0.3 - layerIndex * 0.1}) ${2 + layerIndex}px, transparent 0)
+            `,
+            backgroundSize: `${400 + layerIndex * 200}px ${400 + layerIndex * 200}px`,
+          }}
+          animate={{
+            opacity: [0.5, 1, 0.5],
+            scale: [1, 1.05, 1],
+          }}
+          transition={{
+            duration: 20 + layerIndex * 5,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "easeInOut"
+          }}
+        />
+      ))}
+
+      {/* Deep space nebula effects with multiple layers */}
       <motion.div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `
-            radial-gradient(1px 1px at ${[...Array(100)].map(() => 
-              `${Math.random() * 100}% ${Math.random() * 100}%`
-            ).join(', ')}, rgba(255, 255, 255, 0.3) 2px, transparent 0)
-          `,
-          backgroundSize: '400px 400px',
-        }}
+        className="absolute inset-0 opacity-40 mix-blend-screen"
         animate={{
-          opacity: [0.5, 1, 0.5],
-          scale: [1, 1.05, 1],
+          background: [
+            `radial-gradient(circle at 30% 50%, ${colors[0]}ee 0%, transparent 70%),
+             radial-gradient(circle at 70% 50%, ${colors[1]}ee 0%, transparent 70%),
+             radial-gradient(circle at 50% 20%, ${colors[2]}ee 0%, transparent 70%),
+             radial-gradient(circle at 50% 80%, ${colors[3]}ee 0%, transparent 70%)`,
+            `radial-gradient(circle at 70% 50%, ${colors[1]}ee 0%, transparent 70%),
+             radial-gradient(circle at 30% 50%, ${colors[2]}ee 0%, transparent 70%),
+             radial-gradient(circle at 50% 80%, ${colors[3]}ee 0%, transparent 70%),
+             radial-gradient(circle at 50% 20%, ${colors[0]}ee 0%, transparent 70%)`
+          ]
         }}
         transition={{
-          duration: 15,
+          duration: 40,
           repeat: Infinity,
           repeatType: "reverse",
           ease: "easeInOut"
         }}
       />
 
-      {/* Nebula effects */}
-      <motion.div
-        className="absolute inset-0 opacity-40"
-        animate={{
-          background: [
-            `radial-gradient(circle at 30% 50%, ${colors[0]}dd 0%, transparent 50%),
-             radial-gradient(circle at 70% 50%, ${colors[1]}dd 0%, transparent 50%),
-             radial-gradient(circle at 50% 20%, ${colors[2]}dd 0%, transparent 50%),
-             radial-gradient(circle at 50% 80%, ${colors[3]}dd 0%, transparent 50%)`,
-            `radial-gradient(circle at 70% 50%, ${colors[1]}dd 0%, transparent 50%),
-             radial-gradient(circle at 30% 50%, ${colors[2]}dd 0%, transparent 50%),
-             radial-gradient(circle at 50% 80%, ${colors[3]}dd 0%, transparent 50%),
-             radial-gradient(circle at 50% 20%, ${colors[0]}dd 0%, transparent 50%)`
-          ]
-        }}
-        transition={{
-          duration: 30,
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "linear"
-        }}
-      />
+      {/* Realistic cosmic dust particles with depth */}
+      {[...Array(50)].map((_, i) => {
+        const size = Math.random() * 4 + 1;
+        const depth = Math.random();
+        return (
+          <motion.div
+            key={`dust-${i}`}
+            className="absolute rounded-full blur-sm"
+            style={{
+              width: size,
+              height: size,
+              backgroundColor: `rgba(255, 255, 255, ${0.3 + depth * 0.5})`,
+              boxShadow: `0 0 ${10 + depth * 10}px ${2 + depth * 3}px rgba(255, 255, 255, ${0.3 + depth * 0.2})`,
+              zIndex: Math.floor(depth * 10),
+            }}
+            initial={{
+              x: `${Math.random() * 100}%`,
+              y: `${Math.random() * 100}%`,
+              scale: 0,
+            }}
+            animate={{
+              x: [
+                `${Math.random() * 100}%`,
+                `${Math.random() * 100}%`,
+                `${Math.random() * 100}%`
+              ],
+              y: [
+                `${Math.random() * 100}%`,
+                `${Math.random() * 100}%`,
+                `${Math.random() * 100}%`
+              ],
+              scale: [1, 1.5, 1],
+              opacity: [0.2, 0.6, 0.2],
+            }}
+            transition={{
+              duration: 30 + depth * 20,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "linear",
+              delay: i * 0.2,
+            }}
+          />
+        );
+      })}
 
-      {/* Cosmic dust particles */}
-      {[...Array(30)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full"
-          style={{
-            width: Math.random() * 3 + 1,
-            height: Math.random() * 3 + 1,
-            backgroundColor: 'rgba(255, 255, 255, 0.8)',
-            boxShadow: '0 0 10px 2px rgba(255, 255, 255, 0.3)',
-          }}
-          initial={{
-            x: `${Math.random() * 100}%`,
-            y: `${Math.random() * 100}%`,
-            scale: 0,
-          }}
-          animate={{
-            x: [
-              `${Math.random() * 100}%`,
-              `${Math.random() * 100}%`,
-              `${Math.random() * 100}%`
-            ],
-            y: [
-              `${Math.random() * 100}%`,
-              `${Math.random() * 100}%`,
-              `${Math.random() * 100}%`
-            ],
-            scale: [1, 2, 1],
-            opacity: [0.2, 0.8, 0.2],
-          }}
-          transition={{
-            duration: 20 + i,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "linear",
-            delay: i * 0.5,
-          }}
-        />
-      ))}
-
-      {/* Cosmic energy waves */}
+      {/* Cosmic energy waves with realistic glow */}
       <motion.div
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0 opacity-20 mix-blend-screen"
         style={{
           backgroundImage: `
             conic-gradient(from 0deg at 50% 50%,
               ${colors[0]}00 0%,
-              ${colors[1]}88 25%,
-              ${colors[2]}88 50%,
-              ${colors[3]}88 75%,
+              ${colors[1]}aa 25%,
+              ${colors[2]}aa 50%,
+              ${colors[3]}aa 75%,
               ${colors[0]}00 100%)
           `,
+          filter: 'blur(40px)',
         }}
         animate={{
           rotate: [0, 360],
-          scale: [1, 1.2, 1],
+          scale: [1, 1.1, 1],
         }}
         transition={{
-          duration: 40,
+          duration: 60,
           repeat: Infinity,
           repeatType: "loop",
           ease: "linear",
         }}
       />
 
-      {/* Larger bright stars */}
-      {[...Array(15)].map((_, i) => (
-        <motion.div
-          key={`star-${i}`}
-          className="absolute rounded-full"
-          style={{
-            width: Math.random() * 4 + 2,
-            height: Math.random() * 4 + 2,
-            backgroundColor: 'white',
-            boxShadow: '0 0 15px 5px rgba(255, 255, 255, 0.5)',
-          }}
-          initial={{
-            x: `${Math.random() * 100}%`,
-            y: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            scale: [1, 1.5, 1],
-            opacity: [0.7, 1, 0.7],
-          }}
-          transition={{
-            duration: 3 + i,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "easeInOut",
-            delay: i * 0.3,
-          }}
-        />
-      ))}
+      {/* Bright stars with realistic twinkling */}
+      {[...Array(20)].map((_, i) => {
+        const size = Math.random() * 3 + 2;
+        return (
+          <motion.div
+            key={`star-${i}`}
+            className="absolute rounded-full"
+            style={{
+              width: size,
+              height: size,
+              backgroundColor: 'white',
+              boxShadow: `0 0 ${size * 5}px ${size}px rgba(255, 255, 255, 0.8),
+                         0 0 ${size * 2}px ${size / 2}px rgba(255, 255, 255, 0.6)`,
+            }}
+            initial={{
+              x: `${Math.random() * 100}%`,
+              y: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              scale: [1, 1.3, 0.8, 1.2, 1],
+              opacity: [0.7, 1, 0.6, 0.9, 0.7],
+            }}
+            transition={{
+              duration: 4 + i * 0.5,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+              delay: i * 0.2,
+            }}
+          />
+        );
+      })}
     </motion.div>
   );
 }
