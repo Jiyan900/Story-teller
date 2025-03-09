@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "wouter";
 import { StoryDisplay } from "@/components/story-display";
+import { MoodLighting } from "@/components/mood-lighting";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { type Story } from "@shared/schema";
@@ -32,15 +33,8 @@ export default function StoryPage() {
   }
 
   return (
-    <div 
-      className="min-h-screen py-12 px-4 bg-gradient-to-b from-background to-primary/5"
-      style={{
-        background: `
-          radial-gradient(circle at 100% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
-          radial-gradient(circle at 0% 50%, rgba(255,255,255,0.1) 0%, transparent 50%)
-        `,
-      }}
-    >
+    <div className="min-h-screen py-12 px-4">
+      <MoodLighting theme={story.theme} />
       <StoryDisplay story={story} />
       <div className="text-center mt-8">
         <Link href="/">
