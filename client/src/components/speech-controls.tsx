@@ -11,94 +11,83 @@ interface SpeechControlsProps {
 type Language = {
   code: string;
   name: string;
+  voiceName: string;
 };
 
 const languages: Language[] = [
-  { code: 'en', name: 'English' },
-  { code: 'hi', name: 'Hindi' },
-  { code: 'as', name: 'Assamese' },
-  { code: 'es', name: 'Spanish' },
-  { code: 'fr', name: 'French' },
-  { code: 'de', name: 'German' },
-  { code: 'it', name: 'Italian' },
-  { code: 'pt', name: 'Portuguese' },
-  { code: 'ru', name: 'Russian' },
-  { code: 'zh', name: 'Chinese' },
-  { code: 'ja', name: 'Japanese' },
-  { code: 'ko', name: 'Korean' },
+  { code: 'en', name: 'English', voiceName: 'UK English Female' },
+  { code: 'hi', name: 'Hindi', voiceName: 'Hindi Female' },
+  { code: 'as', name: 'Assamese', voiceName: 'Bangla Bangladeshi Female' }, // Using Bengali as closest to Assamese
+  { code: 'es', name: 'Spanish', voiceName: 'Spanish Female' },
+  { code: 'fr', name: 'French', voiceName: 'French Female' },
+  { code: 'de', name: 'German', voiceName: 'Deutsch Female' },
+  { code: 'it', name: 'Italian', voiceName: 'Italian Female' },
+  { code: 'pt', name: 'Portuguese', voiceName: 'Portuguese Female' },
+  { code: 'ru', name: 'Russian', voiceName: 'Russian Female' },
+  { code: 'zh', name: 'Chinese', voiceName: 'Chinese Female' },
+  { code: 'ja', name: 'Japanese', voiceName: 'Japanese Female' },
+  { code: 'ko', name: 'Korean', voiceName: 'Korean Female' },
 ];
+
+declare global {
+  interface Window {
+    responsiveVoice: {
+      speak: (text: string, voice: string, options?: any) => void;
+      cancel: () => void;
+      isPlaying: () => boolean;
+      voiceSupport: () => boolean;
+    };
+  }
+}
 
 export function SpeechControls({ text }: SpeechControlsProps) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
-  const [selectedVoice, setSelectedVoice] = useState<string>('');
   const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
   const { toast } = useToast();
 
   useEffect(() => {
-    // Check if speech synthesis is supported
-    if (typeof window === 'undefined' || !window.speechSynthesis) {
-      toast({
-        title: "Not Supported",
-        description: "Text-to-speech is not supported in your browser.",
-        variant: "destructive",
-      });
-      return;
-    }
+    // Load ResponsiveVoice script
+    const script = document.createElement('script');
+    script.src = 'https://code.responsivevoice.org/responsivevoice.js?key=YOUR_FREE_KEY';
+    script.async = true;
+    document.body.appendChild(script);
 
-    // Function to load and set available voices
-    function loadVoices() {
-      const availableVoices = window.speechSynthesis.getVoices();
-      if (availableVoices.length > 0) {
-        setVoices(availableVoices);
-        // Select the first voice for the current language
-        const languageVoice = availableVoices.find(voice => voice.lang.startsWith(selectedLanguage));
-        if (languageVoice) {
-          setSelectedVoice(languageVoice.name);
-        }
-      }
-    }
-
-    // Load voices immediately in case they're already available
-    loadVoices();
-
-    // Also handle the voiceschanged event for browsers that load voices asynchronously
-    window.speechSynthesis.onvoiceschanged = loadVoices;
-
-    // Cleanup
-    return () => {
-      if (window.speechSynthesis) {
-        window.speechSynthesis.cancel();
-      }
-    };
-  }, [selectedLanguage, toast]);
-
-  const speak = () => {
-    if (!window.speechSynthesis) return;
-
-    try {
-      const utterance = new SpeechSynthesisUtterance(text);
-      const voice = voices.find(v => v.name === selectedVoice);
-      if (voice) {
-        utterance.voice = voice;
-        utterance.lang = voice.lang;
-      } else {
-        // If no specific voice is selected, at least set the language
-        utterance.lang = selectedLanguage;
-      }
-
-      utterance.onend = () => setIsPlaying(false);
-      utterance.onerror = () => {
-        setIsPlaying(false);
+    script.onload = () => {
+      if (!window.responsiveVoice?.voiceSupport()) {
         toast({
-          title: "Error",
-          description: "Failed to play speech. Please try again.",
+          title: "Not Supported",
+          description: "Text-to-speech is not supported in your browser.",
           variant: "destructive",
         });
-      };
+      }
+    };
 
-      window.speechSynthesis.cancel(); // Stop any ongoing speech
-      window.speechSynthesis.speak(utterance);
+    return () => {
+      if (window.responsiveVoice) {
+        window.responsiveVoice.cancel();
+      }
+      document.body.removeChild(script);
+    };
+  }, [toast]);
+
+  const speak = () => {
+    if (!window.responsiveVoice) return;
+
+    try {
+      const language = languages.find(lang => lang.code === selectedLanguage);
+      if (!language) return;
+
+      window.responsiveVoice.speak(text, language.voiceName, {
+        onend: () => setIsPlaying(false),
+        onerror: () => {
+          setIsPlaying(false);
+          toast({
+            title: "Error",
+            description: "Failed to play speech. Please try again.",
+            variant: "destructive",
+          });
+        },
+      });
       setIsPlaying(true);
     } catch (error) {
       console.error('Speech synthesis error:', error);
@@ -110,23 +99,14 @@ export function SpeechControls({ text }: SpeechControlsProps) {
     }
   };
 
-  const pause = () => {
-    if (window.speechSynthesis) {
-      window.speechSynthesis.pause();
-      setIsPlaying(false);
-    }
-  };
-
   const stop = () => {
-    if (window.speechSynthesis) {
-      window.speechSynthesis.cancel();
+    if (window.responsiveVoice) {
+      window.responsiveVoice.cancel();
       setIsPlaying(false);
     }
   };
 
-  const filteredVoices = voices.filter(voice => voice.lang.startsWith(selectedLanguage));
-
-  if (!window.speechSynthesis) {
+  if (!window.responsiveVoice?.voiceSupport()) {
     return null;
   }
 
@@ -144,7 +124,7 @@ export function SpeechControls({ text }: SpeechControlsProps) {
           </Button>
         ) : (
           <Button
-            onClick={pause}
+            onClick={stop}
             variant="outline"
             size="icon"
             className="w-10 h-10"
@@ -167,10 +147,7 @@ export function SpeechControls({ text }: SpeechControlsProps) {
         <Globe2 className="h-5 w-5 text-muted-foreground" />
         <Select
           value={selectedLanguage}
-          onValueChange={(value) => {
-            setSelectedLanguage(value);
-            setSelectedVoice(''); // Reset voice when language changes
-          }}
+          onValueChange={setSelectedLanguage}
         >
           <SelectTrigger className="w-[200px]">
             <SelectValue placeholder="Select a language" />
@@ -180,29 +157,8 @@ export function SpeechControls({ text }: SpeechControlsProps) {
               <SelectItem 
                 key={lang.code} 
                 value={lang.code}
-                disabled={!voices.some(voice => voice.lang.startsWith(lang.code))}
               >
                 {lang.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="flex items-center gap-2">
-        <Volume2 className="h-5 w-5 text-muted-foreground" />
-        <Select
-          value={selectedVoice}
-          onValueChange={setSelectedVoice}
-          disabled={filteredVoices.length === 0}
-        >
-          <SelectTrigger className="w-[200px]">
-            <SelectValue placeholder="Select a voice" />
-          </SelectTrigger>
-          <SelectContent>
-            {filteredVoices.map((voice) => (
-              <SelectItem key={voice.name} value={voice.name}>
-                {voice.name}
               </SelectItem>
             ))}
           </SelectContent>
