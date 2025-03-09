@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "wouter";
-import { StoryCard } from "@/components/ui/story-card";
+import { StoryDisplay } from "@/components/story-display";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { type Story } from "@shared/schema";
 
 export default function StoryPage() {
   const { id } = useParams<{ id: string }>();
-  
+
   const { data: story, isLoading, error } = useQuery<Story>({
     queryKey: [`/api/stories/${id}`],
   });
@@ -33,20 +33,21 @@ export default function StoryPage() {
 
   return (
     <div 
-      className="min-h-screen py-12 px-4"
+      className="min-h-screen py-12 px-4 bg-gradient-to-b from-background to-primary/5"
       style={{
-        backgroundImage: `url('https://images.unsplash.com/photo-1672357868651-687c364ca15b')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        background: `
+          radial-gradient(circle at 100% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+          radial-gradient(circle at 0% 50%, rgba(255,255,255,0.1) 0%, transparent 50%)
+        `,
       }}
     >
-      <div className="max-w-4xl mx-auto">
-        <StoryCard story={story} />
-        <div className="text-center mt-8">
-          <Link href="/">
-            <Button>Create Another Story</Button>
-          </Link>
-        </div>
+      <StoryDisplay story={story} />
+      <div className="text-center mt-8">
+        <Link href="/">
+          <Button className="bg-primary/90 hover:bg-primary">
+            Create Another Story
+          </Button>
+        </Link>
       </div>
     </div>
   );
