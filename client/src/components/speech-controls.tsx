@@ -82,6 +82,9 @@ export function SpeechControls({ text }: SpeechControlsProps) {
       if (voice) {
         utterance.voice = voice;
         utterance.lang = voice.lang;
+      } else {
+        // If no specific voice is selected, at least set the language
+        utterance.lang = selectedLanguage;
       }
 
       utterance.onend = () => setIsPlaying(false);
