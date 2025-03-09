@@ -48,7 +48,7 @@ export function SpeechControls({ text }: SpeechControlsProps) {
   useEffect(() => {
     // Load ResponsiveVoice script
     const script = document.createElement('script');
-    script.src = 'https://code.responsivevoice.org/responsivevoice.js?key=YOUR_FREE_KEY';
+    script.src = 'https://code.responsivevoice.org/responsivevoice.js?key=HmYz4YHq';
     script.async = true;
     document.body.appendChild(script);
 
@@ -145,22 +145,27 @@ export function SpeechControls({ text }: SpeechControlsProps) {
 
       <div className="flex items-center gap-2">
         <Globe2 className="h-5 w-5 text-muted-foreground" />
-        <Select
-          value={selectedLanguage}
-          onValueChange={setSelectedLanguage}
-          className="w-32" // Added a width class for better styling
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Select Language" /> {/*Improved placeholder*/}
-          </SelectTrigger>
-          <SelectContent>
-            {languages.map((lang) => (
-              <SelectItem key={lang.code} value={lang.code}>
-                {lang.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="min-w-[140px]">
+          <Select
+            value={selectedLanguage}
+            onValueChange={setSelectedLanguage}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select Language" />
+            </SelectTrigger>
+            <SelectContent>
+              {languages.map((lang) => (
+                <SelectItem 
+                  key={lang.code} 
+                  value={lang.code}
+                  className="py-3 text-base cursor-pointer hover:bg-primary/10 focus:bg-primary/10"
+                >
+                  {lang.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
     </div>
   );
