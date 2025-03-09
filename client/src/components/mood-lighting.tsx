@@ -6,12 +6,12 @@ interface MoodLightingProps {
 }
 
 const themeColors = {
-  Adventure: ['#ffd700', '#ff6b6b', '#4facfe', '#00f2fe'],  // Gold, Coral, Blue, Cyan
-  Bedtime: ['#2d3436', '#6c5ce7', '#0984e3', '#81ecec'],    // Dark, Purple, Deep Blue, Light Blue
-  Friendship: ['#ff9a9e', '#fad0c4', '#a18cd1', '#fbc2eb'], // Pink, Peach, Lavender, Light Pink
-  Kindness: ['#96e6a1', '#d4fc79', '#a8edea', '#d0f7c3'],   // Green, Light Green, Mint, Soft Green
-  Sharing: ['#fddb92', '#d1fdff', '#b721ff', '#21d4fd'],    // Yellow, Light Blue, Purple, Cyan
-  Courage: ['#ff9a9e', '#fecfef', '#fa709a', '#fee140']     // Pink, Light Pink, Deep Pink, Yellow
+  Adventure: ['#0B0B3B', '#4A148C', '#6200EA', '#FFD700'],  // Deep Space Purple with Gold
+  Bedtime: ['#1A237E', '#311B92', '#4527A0', '#B39DDB'],    // Night Sky Blues
+  Friendship: ['#4A148C', '#6A1B9A', '#8E24AA', '#E1BEE7'], // Cosmic Purple
+  Kindness: ['#1A237E', '#0D47A1', '#1565C0', '#90CAF9'],   // Nebula Blue
+  Sharing: ['#311B92', '#4527A0', '#512DA8', '#D1C4E9'],    // Galaxy Purple
+  Courage: ['#0B0B3B', '#1A237E', '#283593', '#FFD700']     // Deep Space with Gold
 };
 
 export function MoodLighting({ theme }: MoodLightingProps) {
@@ -23,67 +23,67 @@ export function MoodLighting({ theme }: MoodLightingProps) {
 
   return (
     <motion.div
-      className="fixed inset-0 -z-10 overflow-hidden"
+      className="fixed inset-0 -z-10 overflow-hidden bg-black"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 1.5, ease: "easeInOut" }}
+      transition={{ duration: 2, ease: "easeInOut" }}
     >
-      {/* Animated gradient background */}
+      {/* Starfield background */}
       <motion.div
         className="absolute inset-0"
+        style={{
+          backgroundImage: `
+            radial-gradient(1px 1px at ${[...Array(100)].map(() => 
+              `${Math.random() * 100}% ${Math.random() * 100}%`
+            ).join(', ')}, rgba(255, 255, 255, 0.3) 2px, transparent 0)
+          `,
+          backgroundSize: '400px 400px',
+        }}
+        animate={{
+          opacity: [0.5, 1, 0.5],
+          scale: [1, 1.05, 1],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "easeInOut"
+        }}
+      />
+
+      {/* Nebula effects */}
+      <motion.div
+        className="absolute inset-0 opacity-40"
         animate={{
           background: [
-            `radial-gradient(circle at 20% 20%, ${colors[0]}44 0%, transparent 60%),
-             radial-gradient(circle at 80% 80%, ${colors[1]}44 0%, transparent 60%),
-             radial-gradient(circle at 50% 50%, ${colors[2]}44 0%, transparent 60%),
-             radial-gradient(circle at 30% 70%, ${colors[3]}44 0%, transparent 60%)`,
-            `radial-gradient(circle at 80% 20%, ${colors[1]}44 0%, transparent 60%),
-             radial-gradient(circle at 20% 80%, ${colors[2]}44 0%, transparent 60%),
-             radial-gradient(circle at 70% 30%, ${colors[3]}44 0%, transparent 60%),
-             radial-gradient(circle at 50% 50%, ${colors[0]}44 0%, transparent 60%)`
+            `radial-gradient(circle at 30% 50%, ${colors[0]}dd 0%, transparent 50%),
+             radial-gradient(circle at 70% 50%, ${colors[1]}dd 0%, transparent 50%),
+             radial-gradient(circle at 50% 20%, ${colors[2]}dd 0%, transparent 50%),
+             radial-gradient(circle at 50% 80%, ${colors[3]}dd 0%, transparent 50%)`,
+            `radial-gradient(circle at 70% 50%, ${colors[1]}dd 0%, transparent 50%),
+             radial-gradient(circle at 30% 50%, ${colors[2]}dd 0%, transparent 50%),
+             radial-gradient(circle at 50% 80%, ${colors[3]}dd 0%, transparent 50%),
+             radial-gradient(circle at 50% 20%, ${colors[0]}dd 0%, transparent 50%)`
           ]
         }}
         transition={{
-          duration: 30, // Increased duration
+          duration: 30,
           repeat: Infinity,
           repeatType: "reverse",
-          ease: "easeInOut"
+          ease: "linear"
         }}
       />
 
-      {/* Shimmering effect layer */}
-      <motion.div
-        className="absolute inset-0 mix-blend-overlay"
-        style={{
-          backgroundImage: `
-            radial-gradient(circle at 50% 50%, ${colors[0]}22 0%, transparent 50%),
-            radial-gradient(circle at 0% 0%, ${colors[1]}22 0%, transparent 50%),
-            radial-gradient(circle at 100% 100%, ${colors[2]}22 0%, transparent 50%)
-          `,
-          backgroundSize: '200px 200px',
-        }}
-        animate={{
-          scale: [1, 1.05, 1], // More subtle scale
-          opacity: [0.4, 0.6, 0.4], // More subtle opacity change
-        }}
-        transition={{
-          duration: 15, // Longer duration
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "easeInOut"
-        }}
-      />
-
-      {/* Dynamic floating orbs */}
-      {[...Array(12)].map((_, i) => (
+      {/* Cosmic dust particles */}
+      {[...Array(30)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute rounded-full blur-2xl"
+          className="absolute rounded-full"
           style={{
-            width: Math.random() * 300 + 100,
-            height: Math.random() * 300 + 100,
-            backgroundColor: colors[i % colors.length] + '33',
-            mixBlendMode: 'screen',
+            width: Math.random() * 3 + 1,
+            height: Math.random() * 3 + 1,
+            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            boxShadow: '0 0 10px 2px rgba(255, 255, 255, 0.3)',
           }}
           initial={{
             x: `${Math.random() * 100}%`,
@@ -94,69 +94,79 @@ export function MoodLighting({ theme }: MoodLightingProps) {
             x: [
               `${Math.random() * 100}%`,
               `${Math.random() * 100}%`,
-              `${Math.random() * 100}%`,
               `${Math.random() * 100}%`
             ],
             y: [
               `${Math.random() * 100}%`,
               `${Math.random() * 100}%`,
-              `${Math.random() * 100}%`,
               `${Math.random() * 100}%`
             ],
-            scale: [1, 1.1, 0.9, 1.2, 1], // More subtle scale changes
-            opacity: [0.3, 0.5, 0.3, 0.4, 0.3], // More subtle opacity changes
+            scale: [1, 2, 1],
+            opacity: [0.2, 0.8, 0.2],
           }}
           transition={{
-            duration: 35 + i * 3, // Much longer duration for orbs
+            duration: 20 + i,
             repeat: Infinity,
             repeatType: "reverse",
-            ease: "easeInOut",
-            delay: i * 0.5, // Longer delay between orbs
+            ease: "linear",
+            delay: i * 0.5,
           }}
         />
       ))}
 
-      {/* Interactive motion effect */}
+      {/* Cosmic energy waves */}
       <motion.div
-        className="absolute inset-0"
+        className="absolute inset-0 opacity-30"
+        style={{
+          backgroundImage: `
+            conic-gradient(from 0deg at 50% 50%,
+              ${colors[0]}00 0%,
+              ${colors[1]}88 25%,
+              ${colors[2]}88 50%,
+              ${colors[3]}88 75%,
+              ${colors[0]}00 100%)
+          `,
+        }}
         animate={{
-          backgroundImage: [
-            `radial-gradient(circle at 50% 50%, ${colors[0]}22 0%, transparent 70%)`,
-            `radial-gradient(circle at 50% 50%, ${colors[1]}22 0%, transparent 70%)`,
-            `radial-gradient(circle at 50% 50%, ${colors[2]}22 0%, transparent 70%)`,
-            `radial-gradient(circle at 50% 50%, ${colors[3]}22 0%, transparent 70%)`
-          ],
-          scale: [1, 1.05, 0.95, 1.08, 1], // More subtle scale changes
-          rotate: [0, 2, -2, 1, 0], // More subtle rotation
+          rotate: [0, 360],
+          scale: [1, 1.2, 1],
         }}
         transition={{
-          duration: 40, // Much longer duration
+          duration: 40,
           repeat: Infinity,
-          repeatType: "reverse",
-          ease: "easeInOut"
+          repeatType: "loop",
+          ease: "linear",
         }}
       />
 
-      {/* Twinkling stars effect for certain themes */}
-      {(theme === 'Adventure' || theme === 'Bedtime') && (
+      {/* Larger bright stars */}
+      {[...Array(15)].map((_, i) => (
         <motion.div
-          className="absolute inset-0"
+          key={`star-${i}`}
+          className="absolute rounded-full"
           style={{
-            backgroundImage: `radial-gradient(circle at 50% 50%, white 1px, transparent 1px)`,
-            backgroundSize: '50px 50px',
+            width: Math.random() * 4 + 2,
+            height: Math.random() * 4 + 2,
+            backgroundColor: 'white',
+            boxShadow: '0 0 15px 5px rgba(255, 255, 255, 0.5)',
+          }}
+          initial={{
+            x: `${Math.random() * 100}%`,
+            y: `${Math.random() * 100}%`,
           }}
           animate={{
-            opacity: [0.1, 0.3, 0.1], // More subtle opacity changes
-            scale: [1, 1.05, 1], // More subtle scale changes
+            scale: [1, 1.5, 1],
+            opacity: [0.7, 1, 0.7],
           }}
           transition={{
-            duration: 8, // Longer duration
+            duration: 3 + i,
             repeat: Infinity,
             repeatType: "reverse",
-            ease: "easeInOut"
+            ease: "easeInOut",
+            delay: i * 0.3,
           }}
         />
-      )}
+      ))}
     </motion.div>
   );
 }
