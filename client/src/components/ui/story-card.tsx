@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type Story } from "@shared/schema";
+import { SpeechControls } from "@/components/speech-controls";
 
 interface StoryCardProps {
   story: Story;
@@ -54,6 +55,7 @@ export function StoryCard({ story }: StoryCardProps) {
               A Story for {story.childName}
             </CardTitle>
           </motion.div>
+          <SpeechControls text={story.content} />
         </CardHeader>
         <CardContent>
           <motion.div 
