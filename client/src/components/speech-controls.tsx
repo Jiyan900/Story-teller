@@ -11,6 +11,8 @@ interface SpeechControlsProps {
 // Simplified voice selection using basic supported voices
 const languages = [
   { code: 'en', name: 'English', voiceName: 'US English Female' },
+  { code: 'hi', name: 'Hindi', voiceName: 'Hindi Female' },
+  { code: 'bn', name: 'Assamese', voiceName: 'Bengali Female' }, // Using Bengali as closest to Assamese
   { code: 'es', name: 'Spanish', voiceName: 'Spanish Latin American Female' },
   { code: 'fr', name: 'French', voiceName: 'French Female' },
   { code: 'de', name: 'German', voiceName: 'German Female' },
@@ -216,8 +218,8 @@ export function SpeechControls({ text }: SpeechControlsProps) {
             </SelectTrigger>
             <SelectContent>
               {languages.map((lang) => (
-                <SelectItem 
-                  key={lang.code} 
+                <SelectItem
+                  key={lang.code}
                   value={lang.code}
                   className="py-3 text-base cursor-pointer hover:bg-primary/10 focus:bg-primary/10"
                 >
