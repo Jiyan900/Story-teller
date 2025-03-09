@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>Magical Bedtime Stories</title>
+    <!-- Updated script tag with better initialization -->
+    <script>
+      window.onload = function() {
+        if (typeof responsiveVoice !== 'undefined') {
+          console.log('ResponsiveVoice is ready');
+          responsiveVoice.init();
+        }
+      }
+    </script>
     <script src="https://code.responsivevoice.org/responsivevoice.js?key=HmYz4YHq"></script>
   </head>
   <body>

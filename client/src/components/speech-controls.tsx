@@ -47,92 +47,73 @@ export function SpeechControls({ text }: SpeechControlsProps) {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Check if ResponsiveVoice is loaded and initialized
-    const checkVoiceSupport = () => {
-      console.log('Checking ResponsiveVoice support...');
-      console.log('ResponsiveVoice object:', window.responsiveVoice);
-
+    // Function to check if ResponsiveVoice is ready
+    const checkVoiceReady = () => {
       if (!window.responsiveVoice) {
-        console.error('ResponsiveVoice not loaded');
-        toast({
-          title: "Speech Not Available",
-          description: "Text-to-speech is initializing. Please try again in a moment.",
-          variant: "destructive",
-        });
         return false;
       }
-
       try {
-        // Try to initialize if not already done
-        if (typeof window.responsiveVoice.init === 'function') {
-          window.responsiveVoice.init();
-        }
+        window.responsiveVoice.init();
         return true;
       } catch (error) {
-        console.error('Error initializing ResponsiveVoice:', error);
+        console.error('ResponsiveVoice initialization error:', error);
         return false;
       }
     };
 
-    const initInterval = setInterval(() => {
-      if (checkVoiceSupport()) {
-        clearInterval(initInterval);
-      }
-    }, 1000);
+    // Check immediately
+    if (!checkVoiceReady()) {
+      // If not ready, start checking periodically
+      const checkInterval = setInterval(() => {
+        if (checkVoiceReady()) {
+          clearInterval(checkInterval);
+        }
+      }, 1000);
 
-    return () => {
-      clearInterval(initInterval);
-      if (window.responsiveVoice) {
-        window.responsiveVoice.cancel();
-      }
-    };
-  }, [toast]);
+      // Clean up interval
+      return () => clearInterval(checkInterval);
+    }
+  }, []);
 
   const speak = () => {
     try {
       if (!window.responsiveVoice) {
-        throw new Error('ResponsiveVoice not loaded');
+        throw new Error('ResponsiveVoice not available');
       }
 
       const language = languages.find(lang => lang.code === selectedLanguage);
       if (!language) {
-        throw new Error('Language not found');
+        throw new Error('Selected language not found');
       }
-
-      console.log('Starting speech:', {
-        language: language.name,
-        voice: language.voiceName,
-        textLength: text.length
-      });
 
       // Cancel any ongoing speech
       window.responsiveVoice.cancel();
 
       // Start new speech
       window.responsiveVoice.speak(text, language.voiceName, {
+        onstart: () => {
+          console.log('Speech started:', language.name);
+          setIsPlaying(true);
+        },
         onend: () => {
-          console.log('Speech ended');
+          console.log('Speech completed');
           setIsPlaying(false);
         },
         onerror: (error: any) => {
           console.error('Speech error:', error);
           setIsPlaying(false);
           toast({
-            title: "Error",
+            title: "Speech Error",
             description: "Failed to play speech. Please try again.",
             variant: "destructive",
           });
-        },
-        onstart: () => {
-          console.log('Speech started');
-          setIsPlaying(true);
         }
       });
     } catch (error) {
-      console.error('Speech synthesis error:', error);
+      console.error('Speech error:', error);
       toast({
-        title: "Error",
-        description: "Failed to start speech. Please try again in a moment.",
+        title: "Speech Unavailable",
+        description: "Text-to-speech service is currently unavailable. Please try again later.",
         variant: "destructive",
       });
     }
@@ -140,7 +121,6 @@ export function SpeechControls({ text }: SpeechControlsProps) {
 
   const stop = () => {
     if (window.responsiveVoice) {
-      console.log('Stopping speech');
       window.responsiveVoice.cancel();
       setIsPlaying(false);
     }
