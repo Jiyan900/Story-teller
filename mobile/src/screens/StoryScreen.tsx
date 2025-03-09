@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { InsertStory } from '@shared/schema';
+import { SpeechControls } from '../components/SpeechControls';
 
 type RootStackParamList = {
   Home: undefined;
@@ -23,6 +24,8 @@ export function StoryScreen({ route, navigation }: Props) {
     <ScrollView style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.title}>A Story for {story.childName}</Text>
+
+        <SpeechControls text={story.content} language={story.language} />
 
         {story.content.split('\n\n').map((paragraph, index) => (
           <Text key={index} style={styles.paragraph}>
