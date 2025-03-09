@@ -61,34 +61,34 @@ export function StoryCard({ story }: StoryCardProps) {
       animate="show"
       variants={containerVariants}
     >
-      <motion.div variants={cardVariants}> {/* Added motion.div and variants */}
-      <Card className="max-w-4xl mx-auto my-8 bg-white/80 backdrop-blur-sm shadow-lg border-primary/20">
-        <CardHeader>
-          <motion.div variants={titleVariants}>
-            <CardTitle className="text-3xl font-bold text-primary text-center">
-              A Story for {story.childName}
-            </CardTitle>
-          </motion.div>
-          <SpeechControls text={story.content} />
-        </CardHeader>
-        <CardContent>
-          <motion.div 
-            className="prose prose-lg max-w-none"
-            variants={containerVariants}
-          >
-            {story.content.split("\n\n").map((paragraph, index) => (
-              <motion.p
-                key={index}
-                variants={paragraphVariants}
-                className="mb-4 leading-relaxed"
-              >
-                {paragraph}
-              </motion.p>
-            ))}
-          </motion.div>
-        </CardContent>
-      </Card>
-      </motion.div> {/*Closing motion.div */}
+      <motion.div variants={cardVariants}>
+        <Card className="max-w-4xl mx-auto my-8 bg-white/80 backdrop-blur-sm shadow-lg border-primary/20">
+          <CardHeader>
+            <motion.div variants={titleVariants}>
+              <CardTitle className="text-3xl font-bold text-primary text-center">
+                A Story for {story.childName}
+              </CardTitle>
+            </motion.div>
+            <SpeechControls text={story.content} language={story.language} />
+          </CardHeader>
+          <CardContent>
+            <motion.div 
+              className="prose prose-lg max-w-none"
+              variants={containerVariants}
+            >
+              {story.content.split("\n\n").map((paragraph, index) => (
+                <motion.p
+                  key={index}
+                  variants={paragraphVariants}
+                  className="mb-4 leading-relaxed"
+                >
+                  {paragraph}
+                </motion.p>
+              ))}
+            </motion.div>
+          </CardContent>
+        </Card>
+      </motion.div>
     </motion.div>
   );
 }

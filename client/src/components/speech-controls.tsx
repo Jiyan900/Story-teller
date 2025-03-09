@@ -1,23 +1,19 @@
 import { useState, useEffect } from 'react';
-import { Play, Pause, StopCircle, Globe2 } from 'lucide-react';
+import { Play, Pause, StopCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 
 interface SpeechControlsProps {
   text: string;
+  language?: string;
 }
 
 // Simplified voice selection using basic supported voices
-const languages = [
-  { code: 'en', name: 'English', voiceName: 'US English Female' },
-  { code: 'hi', name: 'Hindi', voiceName: 'Hindi Female' },
-  { code: 'bn', name: 'Assamese', voiceName: 'Bengali Female' }, // Using Bengali as closest to Assamese
-  { code: 'es', name: 'Spanish', voiceName: 'Spanish Latin American Female' },
-  { code: 'fr', name: 'French', voiceName: 'French Female' },
-  { code: 'de', name: 'German', voiceName: 'German Female' },
-  { code: 'it', name: 'Italian', voiceName: 'Italian Female' }
-];
+const voiceMap = {
+  'en': 'US English Female',
+  'hi': 'Hindi Female',
+  'bn': 'Bengali Female'
+};
 
 declare global {
   interface Window {
@@ -31,9 +27,8 @@ declare global {
   }
 }
 
-export function SpeechControls({ text }: SpeechControlsProps) {
+export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
   const [isReady, setIsReady] = useState(false);
   const { toast } = useToast();
 
@@ -85,7 +80,7 @@ export function SpeechControls({ text }: SpeechControlsProps) {
   const testVoice = () => {
     try {
       if (typeof window.responsiveVoice !== 'undefined') {
-        window.responsiveVoice.speak('Testing text to speech', 'US English Female', {
+        window.responsiveVoice.speak('Testing text to speech', voiceMap[language as keyof typeof voiceMap], {
           onstart: () => console.log('Test speech started'),
           onend: () => console.log('Test speech completed'),
           onerror: (error) => console.error('Test speech error:', error)
@@ -114,18 +109,18 @@ export function SpeechControls({ text }: SpeechControlsProps) {
     }
 
     try {
-      const language = languages.find(lang => lang.code === selectedLanguage);
-      if (!language) {
-        throw new Error('Selected language not found');
+      const voiceName = voiceMap[language as keyof typeof voiceMap];
+      if (!voiceName) {
+        throw new Error('Selected language not supported');
       }
 
       // Cancel any ongoing speech
       window.responsiveVoice.cancel();
 
       // Start new speech
-      window.responsiveVoice.speak(text, language.voiceName, {
+      window.responsiveVoice.speak(text, voiceName, {
         onstart: () => {
-          console.log('Speech started:', language.name);
+          console.log('Speech started:', language);
           setIsPlaying(true);
         },
         onend: () => {
@@ -174,62 +169,35 @@ export function SpeechControls({ text }: SpeechControlsProps) {
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-4 my-4">
-      <div className="flex items-center gap-2">
-        {!isPlaying ? (
-          <Button
-            onClick={speak}
-            variant="outline"
-            size="icon"
-            className="w-10 h-10"
-          >
-            <Play className="h-5 w-5" />
-          </Button>
-        ) : (
-          <Button
-            onClick={stop}
-            variant="outline"
-            size="icon"
-            className="w-10 h-10"
-          >
-            <Pause className="h-5 w-5" />
-          </Button>
-        )}
+    <div className="flex items-center gap-2 my-4">
+      {!isPlaying ? (
+        <Button
+          onClick={speak}
+          variant="outline"
+          size="icon"
+          className="w-10 h-10"
+        >
+          <Play className="h-5 w-5" />
+        </Button>
+      ) : (
         <Button
           onClick={stop}
           variant="outline"
           size="icon"
           className="w-10 h-10"
-          disabled={!isPlaying}
         >
-          <StopCircle className="h-5 w-5" />
+          <Pause className="h-5 w-5" />
         </Button>
-      </div>
-
-      <div className="flex items-center gap-2">
-        <Globe2 className="h-5 w-5 text-muted-foreground" />
-        <div className="min-w-[140px]">
-          <Select
-            value={selectedLanguage}
-            onValueChange={setSelectedLanguage}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select Language" />
-            </SelectTrigger>
-            <SelectContent>
-              {languages.map((lang) => (
-                <SelectItem
-                  key={lang.code}
-                  value={lang.code}
-                  className="py-3 text-base cursor-pointer hover:bg-primary/10 focus:bg-primary/10"
-                >
-                  {lang.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
+      )}
+      <Button
+        onClick={stop}
+        variant="outline"
+        size="icon"
+        className="w-10 h-10"
+        disabled={!isPlaying}
+      >
+        <StopCircle className="h-5 w-5" />
+      </Button>
     </div>
   );
 }
