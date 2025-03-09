@@ -54,7 +54,7 @@ export function MoodLighting({ theme }: MoodLightingProps) {
         />
       ))}
 
-      {/* Deep space nebula effects with multiple layers */}
+      {/* Deep space nebula effects */}
       <motion.div
         className="absolute inset-0 opacity-40 mix-blend-screen"
         animate={{
@@ -73,11 +73,11 @@ export function MoodLighting({ theme }: MoodLightingProps) {
           duration: 40,
           repeat: Infinity,
           repeatType: "reverse",
-          ease: "easeInOut"
+          ease: "linear"
         }}
       />
 
-      {/* Realistic cosmic dust particles with depth */}
+      {/* Cosmic dust particles with depth */}
       {[...Array(50)].map((_, i) => {
         const size = Math.random() * 4 + 1;
         const depth = Math.random();
@@ -121,32 +121,6 @@ export function MoodLighting({ theme }: MoodLightingProps) {
           />
         );
       })}
-
-      {/* Cosmic energy waves with realistic glow */}
-      <motion.div
-        className="absolute inset-0 opacity-20 mix-blend-screen"
-        style={{
-          backgroundImage: `
-            conic-gradient(from 0deg at 50% 50%,
-              ${colors[0]}00 0%,
-              ${colors[1]}aa 25%,
-              ${colors[2]}aa 50%,
-              ${colors[3]}aa 75%,
-              ${colors[0]}00 100%)
-          `,
-          filter: 'blur(40px)',
-        }}
-        animate={{
-          rotate: [0, 360],
-          scale: [1, 1.1, 1],
-        }}
-        transition={{
-          duration: 60,
-          repeat: Infinity,
-          repeatType: "loop",
-          ease: "linear",
-        }}
-      />
 
       {/* Bright stars with realistic twinkling */}
       {[...Array(20)].map((_, i) => {
