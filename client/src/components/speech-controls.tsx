@@ -44,43 +44,65 @@ declare global {
 export function SpeechControls({ text }: SpeechControlsProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
+  const [isReady, setIsReady] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
-    // Function to check if ResponsiveVoice is ready
+    let checkAttempts = 0;
+    const maxAttempts = 10;
+
     const checkVoiceReady = () => {
-      if (!window.responsiveVoice) {
-        return false;
+      console.log('Checking ResponsiveVoice availability...');
+
+      if (typeof window.responsiveVoice !== 'undefined') {
+        try {
+          window.responsiveVoice.init();
+          console.log('ResponsiveVoice initialized successfully');
+          setIsReady(true);
+          return true;
+        } catch (error) {
+          console.error('ResponsiveVoice initialization error:', error);
+        }
       }
-      try {
-        window.responsiveVoice.init();
-        return true;
-      } catch (error) {
-        console.error('ResponsiveVoice initialization error:', error);
-        return false;
-      }
+      return false;
     };
 
-    // Check immediately
-    if (!checkVoiceReady()) {
-      // If not ready, start checking periodically
-      const checkInterval = setInterval(() => {
-        if (checkVoiceReady()) {
-          clearInterval(checkInterval);
-        }
-      }, 1000);
+    const initInterval = setInterval(() => {
+      checkAttempts++;
 
-      // Clean up interval
-      return () => clearInterval(checkInterval);
-    }
-  }, []);
+      if (checkVoiceReady() || checkAttempts >= maxAttempts) {
+        clearInterval(initInterval);
+
+        if (checkAttempts >= maxAttempts && !isReady) {
+          console.error('Failed to initialize ResponsiveVoice after maximum attempts');
+          toast({
+            title: "Service Unavailable",
+            description: "Text-to-speech service could not be initialized. Please refresh the page.",
+            variant: "destructive",
+          });
+        }
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(initInterval);
+      if (window.responsiveVoice) {
+        window.responsiveVoice.cancel();
+      }
+    };
+  }, [toast]);
 
   const speak = () => {
-    try {
-      if (!window.responsiveVoice) {
-        throw new Error('ResponsiveVoice not available');
-      }
+    if (!window.responsiveVoice || !isReady) {
+      toast({
+        title: "Service Not Ready",
+        description: "Please wait while the text-to-speech service initializes.",
+        variant: "destructive",
+      });
+      return;
+    }
 
+    try {
       const language = languages.find(lang => lang.code === selectedLanguage);
       if (!language) {
         throw new Error('Selected language not found');
@@ -112,8 +134,8 @@ export function SpeechControls({ text }: SpeechControlsProps) {
     } catch (error) {
       console.error('Speech error:', error);
       toast({
-        title: "Speech Unavailable",
-        description: "Text-to-speech service is currently unavailable. Please try again later.",
+        title: "Speech Error",
+        description: "Failed to start speech. Please try again.",
         variant: "destructive",
       });
     }
@@ -125,6 +147,15 @@ export function SpeechControls({ text }: SpeechControlsProps) {
       setIsPlaying(false);
     }
   };
+
+  if (!isReady) {
+    return (
+      <div className="flex items-center gap-2 text-muted-foreground">
+        <div className="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full" />
+        <span>Initializing text-to-speech...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-wrap items-center gap-4 my-4">
