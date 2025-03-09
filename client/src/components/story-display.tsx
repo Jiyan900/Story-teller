@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { StoryCard } from "@/components/ui/story-card";
+import { MoodLighting } from "@/components/mood-lighting";
 import { type Story } from "@shared/schema";
 import { Star, Moon, Cloud, Sun, Sparkles, Stars } from "lucide-react";
 
@@ -95,6 +96,9 @@ export function StoryDisplay({ story }: StoryDisplayProps) {
         className="relative w-full max-w-4xl mx-auto"
         {...pageTransition}
       >
+        {/* Add MoodLighting component based on story theme */}
+        <MoodLighting theme={story.theme} />
+
         {/* Decorative elements with staggered animations */}
         <DecoElement
           Icon={Star}
