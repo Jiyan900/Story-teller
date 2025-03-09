@@ -148,16 +148,14 @@ export function SpeechControls({ text }: SpeechControlsProps) {
         <Select
           value={selectedLanguage}
           onValueChange={setSelectedLanguage}
+          className="w-32" // Added a width class for better styling
         >
-          <SelectTrigger className="w-[200px]">
-            <SelectValue placeholder="Select a language" />
+          <SelectTrigger>
+            <SelectValue placeholder="Select Language" /> {/*Improved placeholder*/}
           </SelectTrigger>
           <SelectContent>
             {languages.map((lang) => (
-              <SelectItem 
-                key={lang.code} 
-                value={lang.code}
-              >
+              <SelectItem key={lang.code} value={lang.code}>
                 {lang.name}
               </SelectItem>
             ))}
