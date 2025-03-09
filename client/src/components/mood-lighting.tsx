@@ -44,7 +44,7 @@ export function MoodLighting({ theme }: MoodLightingProps) {
           ]
         }}
         transition={{
-          duration: 15,
+          duration: 30, // Increased duration
           repeat: Infinity,
           repeatType: "reverse",
           ease: "easeInOut"
@@ -63,11 +63,11 @@ export function MoodLighting({ theme }: MoodLightingProps) {
           backgroundSize: '200px 200px',
         }}
         animate={{
-          scale: [1, 1.1, 1],
-          opacity: [0.3, 0.7, 0.3],
+          scale: [1, 1.05, 1], // More subtle scale
+          opacity: [0.4, 0.6, 0.4], // More subtle opacity change
         }}
         transition={{
-          duration: 8,
+          duration: 15, // Longer duration
           repeat: Infinity,
           repeatType: "reverse",
           ease: "easeInOut"
@@ -103,15 +103,15 @@ export function MoodLighting({ theme }: MoodLightingProps) {
               `${Math.random() * 100}%`,
               `${Math.random() * 100}%`
             ],
-            scale: [1, 1.2, 0.8, 1.4, 1],
-            opacity: [0.4, 0.7, 0.3, 0.6, 0.4],
+            scale: [1, 1.1, 0.9, 1.2, 1], // More subtle scale changes
+            opacity: [0.3, 0.5, 0.3, 0.4, 0.3], // More subtle opacity changes
           }}
           transition={{
-            duration: 25 + i * 2,
+            duration: 35 + i * 3, // Much longer duration for orbs
             repeat: Infinity,
             repeatType: "reverse",
             ease: "easeInOut",
-            delay: i * 0.2,
+            delay: i * 0.5, // Longer delay between orbs
           }}
         />
       ))}
@@ -126,11 +126,11 @@ export function MoodLighting({ theme }: MoodLightingProps) {
             `radial-gradient(circle at 50% 50%, ${colors[2]}22 0%, transparent 70%)`,
             `radial-gradient(circle at 50% 50%, ${colors[3]}22 0%, transparent 70%)`
           ],
-          scale: [1, 1.1, 0.9, 1.2, 1],
-          rotate: [0, 5, -5, 3, 0],
+          scale: [1, 1.05, 0.95, 1.08, 1], // More subtle scale changes
+          rotate: [0, 2, -2, 1, 0], // More subtle rotation
         }}
         transition={{
-          duration: 20,
+          duration: 40, // Much longer duration
           repeat: Infinity,
           repeatType: "reverse",
           ease: "easeInOut"
@@ -146,11 +146,11 @@ export function MoodLighting({ theme }: MoodLightingProps) {
             backgroundSize: '50px 50px',
           }}
           animate={{
-            opacity: [0.1, 0.4, 0.1],
-            scale: [1, 1.1, 1],
+            opacity: [0.1, 0.3, 0.1], // More subtle opacity changes
+            scale: [1, 1.05, 1], // More subtle scale changes
           }}
           transition={{
-            duration: 3,
+            duration: 8, // Longer duration
             repeat: Infinity,
             repeatType: "reverse",
             ease: "easeInOut"
