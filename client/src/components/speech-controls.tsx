@@ -8,25 +8,13 @@ interface SpeechControlsProps {
   text: string;
 }
 
-type Language = {
-  code: string;
-  name: string;
-  voiceName: string;
-};
-
-const languages: Language[] = [
-  { code: 'en', name: 'English', voiceName: 'UK English Female' },
-  { code: 'hi', name: 'Hindi', voiceName: 'Hindi Female' },
-  { code: 'as', name: 'Assamese', voiceName: 'Bangla Bangladeshi Female' }, // Using Bengali as closest to Assamese
-  { code: 'es', name: 'Spanish', voiceName: 'Spanish Female' },
+// Simplified voice selection using basic supported voices
+const languages = [
+  { code: 'en', name: 'English', voiceName: 'US English Female' },
+  { code: 'es', name: 'Spanish', voiceName: 'Spanish Latin American Female' },
   { code: 'fr', name: 'French', voiceName: 'French Female' },
-  { code: 'de', name: 'German', voiceName: 'Deutsch Female' },
-  { code: 'it', name: 'Italian', voiceName: 'Italian Female' },
-  { code: 'pt', name: 'Portuguese', voiceName: 'Portuguese Female' },
-  { code: 'ru', name: 'Russian', voiceName: 'Russian Female' },
-  { code: 'zh', name: 'Chinese', voiceName: 'Chinese Female' },
-  { code: 'ja', name: 'Japanese', voiceName: 'Japanese Female' },
-  { code: 'ko', name: 'Korean', voiceName: 'Korean Female' },
+  { code: 'de', name: 'German', voiceName: 'German Female' },
+  { code: 'it', name: 'Italian', voiceName: 'Italian Female' }
 ];
 
 declare global {
@@ -92,6 +80,27 @@ export function SpeechControls({ text }: SpeechControlsProps) {
     };
   }, [toast]);
 
+  const testVoice = () => {
+    try {
+      if (typeof window.responsiveVoice !== 'undefined') {
+        window.responsiveVoice.speak('Testing text to speech', 'US English Female', {
+          onstart: () => console.log('Test speech started'),
+          onend: () => console.log('Test speech completed'),
+          onerror: (error) => console.error('Test speech error:', error)
+        });
+      } else {
+        throw new Error('ResponsiveVoice not available');
+      }
+    } catch (error) {
+      console.error('Test speech failed:', error);
+      toast({
+        title: "Test Failed",
+        description: "Could not test text-to-speech. Service may not be available.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const speak = () => {
     if (!window.responsiveVoice || !isReady) {
       toast({
@@ -150,9 +159,14 @@ export function SpeechControls({ text }: SpeechControlsProps) {
 
   if (!isReady) {
     return (
-      <div className="flex items-center gap-2 text-muted-foreground">
-        <div className="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full" />
-        <span>Initializing text-to-speech...</span>
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 text-muted-foreground">
+          <div className="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full" />
+          <span>Initializing text-to-speech...</span>
+        </div>
+        <Button onClick={testVoice} variant="outline" size="sm">
+          Test Speech
+        </Button>
       </div>
     );
   }
