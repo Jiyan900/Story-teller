@@ -1,10 +1,19 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import cors from "cors";
 
 const app = express();
+
+// Enable CORS for development
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Add health check endpoint
+app.get('/health', (_req, res) => {
+  res.json({ status: 'ok' });
+});
 
 app.use((req, res, next) => {
   const start = Date.now();
