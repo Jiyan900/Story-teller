@@ -4,13 +4,12 @@ type Template = {
     template: string;
     hindiTemplate?: string;
     minLength: number;
-  };
+};
 
-  const templates: Record<string, Template[]> = {
+export const templates: Record<string, Template[]> = {
     Friendship: [
-      // Original template kept as first option
-      {
-        template: `Once upon a time, in a magical forest, there lived a young {animal} named {name}. {name} was a very special {animal} who loved making new friends, but sometimes felt a little shy.
+        {
+            template: `Once upon a time, in a magical forest, there lived a young {animal} named {name}. {name} was a very special {animal} who loved making new friends, but sometimes felt a little shy.
 
 One sunny morning, while playing near the crystal-clear stream, {name} heard gentle rustling in the bushes. To their surprise, they discovered other young animals who were also looking for friendship.
 
@@ -25,7 +24,7 @@ The forest became a happier place because of {name}'s kindness and friendly natu
 And so, {name} the {animal} discovered that the best gift in the world is having good friends who care about you, just as you care about them.
 
 Sweet dreams, little one. Remember, just like {name}, you too can make wonderful friends by being kind and sharing your heart with others.`,
-        hindiTemplate: `एक समय की बात है, एक जादुई जंगल में एक छोटा {animal} रहता था जिसका नाम {name} था।
+            hindiTemplate: `एक समय की बात है, एक जादुई जंगल में एक छोटा {animal} रहता था जिसका नाम {name} था।
 
 {name} एक बहुत ही खास {animal} था जो नए दोस्त बनाना पसंद करता था, लेकिन कभी-कभी थोड़ा शर्मीला महसूस करता था।
 
@@ -42,11 +41,10 @@ Sweet dreams, little one. Remember, just like {name}, you too can make wonderful
 और इस तरह, {name} नाम के {animal} ने पाया कि दुनिया का सबसे बड़ा तोहफा है अच्छे दोस्तों का होना जो आपकी परवाह करते हैं, जैसे आप उनकी परवाह करते हैं।
 
 शुभ रात्रि, छोटे। याद रखो, {name} की तरह, तुम भी दूसरों के प्रति दयालु बनकर और अपना दिल साझा करके अद्भुत दोस्त बना सकते हो।`,
-        minLength: 1000
-      },
-      // New beach-themed friendship story
-      {
-        template: `By the sparkling ocean waves, there lived a curious {animal} named {name}. Unlike other {animal}s, {name} loved spending time near the water's edge, watching the colorful fish dance in the tide pools.
+            minLength: 1000
+        },
+        {
+            template: `By the sparkling ocean waves, there lived a curious {animal} named {name}. Unlike other {animal}s, {name} loved spending time near the water's edge, watching the colorful fish dance in the tide pools.
 
 One particularly sunny morning, {name} noticed a small seahorse who seemed lost and confused. Although {name} had never spoken to a sea creature before, they knew that making new friends meant being brave enough to take the first step.
 
@@ -61,7 +59,7 @@ When they finally found Pearl's family, they were so grateful to {name} that the
 Every sunrise, you could find {name} by the shore, sharing stories with Pearl and their other sea friends, proving that friendship knows no boundaries - not even between land and sea.
 
 Sweet dreams, little one. Remember that like {name}, sometimes the most wonderful friendships begin with a simple act of kindness.`,
-        hindiTemplate: `चमकते समुद्र की लहरों के पास एक जिज्ञासु {animal} रहता था जिसका नाम {name} था।
+            hindiTemplate: `चमकते समुद्र की लहरों के पास एक जिज्ञासु {animal} रहता था जिसका नाम {name} था।
 
 अन्य {animal} की तुलना में, {name} पानी के किनारे समय बिताना पसंद करता था, ज्वार के कुंडों में रंगीन मछलियों को नाचते हुए देखता था।
 
@@ -78,11 +76,10 @@ Sweet dreams, little one. Remember that like {name}, sometimes the most wonderfu
 हर सूर्योदय पर, आप {name} को समुद्र तट पर पा सकते थे, मोती और अपने अन्य समुद्री दोस्तों के साथ कहानियां साझा करते हुए, यह साबित करते हुए कि दोस्ती कोई सीमा नहीं जानती - यहां तक कि जमीन और समुद्र के बीच भी नहीं।
 
 शुभ रात्रि, छोटे। याद रखो कि {name} की तरह, कभी-कभी सबसे अद्भुत दोस्तियां दया के एक साधारण कार्य से शुरू होती हैं।`,
-        minLength: 1000
-      },
-      // New mountain-themed friendship story
-      {
-        template: `High up in the snowy mountains, where the clouds tickled the peaks, lived a brave {animal} named {name}. Though the mountain air was chilly, {name}'s heart was always warm with dreams of making friends in this vast, beautiful place.
+            minLength: 1000
+        },
+        {
+            template: `High up in the snowy mountains, where the clouds tickled the peaks, lived a brave {animal} named {name}. Though the mountain air was chilly, {name}'s heart was always warm with dreams of making friends in this vast, beautiful place.
 
 One winter morning, {name} heard a soft whimper coming from behind a large snow drift. Carefully making their way through the snow, they discovered a young mountain goat who had gotten separated from their herd during the previous night's snowfall.
 
@@ -97,7 +94,7 @@ When they finally found Alpine's herd, the mountain goats were so impressed by {
 Throughout all seasons, {name} and Alpine remained the closest of friends, showing everyone that the strongest friendships can bloom even in the coldest places, warmed by the heat of caring hearts.
 
 Sweet dreams, little one. Like {name}, remember that helping others can lead to the most wonderful and unexpected friendships.`,
-        hindiTemplate: `बर्फीली पहाड़ियों की ऊंचाइयों पर, जहां बादल चोटियों को गुदगुदाते थे, एक बहादुर {animal} रहता था जिसका नाम {name} था। हालांकि पहाड़ी हवा ठंडी थी, {name} का दिल हमेशा इस विशाल, सुंदर जगह में दोस्त बनाने के सपनों से गरम रहता था।
+            hindiTemplate: `बर्फीली पहाड़ियों की ऊंचाइयों पर, जहां बादल चोटियों को गुदगुदाते थे, एक बहादुर {animal} रहता था जिसका नाम {name} था। हालांकि पहाड़ी हवा ठंडी थी, {name} का दिल हमेशा इस विशाल, सुंदर जगह में दोस्त बनाने के सपनों से गरम रहता था।
 
 एक सर्दी की सुबह, {name} ने एक बड़े बर्फ के ढेर के पीछे से एक हल्की सी सिसकी सुनी। सावधानी से बर्फ के बीच से रास्ता बनाते हुए, उन्होंने एक युवा पहाड़ी बकरी को खोजा जो पिछली रात की बर्फबारी के दौरान अपने झुंड से बिछड़ गया था।
 
@@ -112,12 +109,12 @@ Sweet dreams, little one. Like {name}, remember that helping others can lead to 
 सभी मौसमों में, {name} और अल्पाइन सबसे करीबी दोस्त बने रहे, सभी को दिखाते हुए कि सबसे मजबूत दोस्तियां सबसे ठंडी जगहों में भी खिल सकती हैं, देखभाल करने वाले दिलों की गर्मी से।
 
 शुभ रात्रि, छोटे। {name} की तरह, याद रखो कि दूसरों की मदद करने से सबसे अद्भुत और अप्रत्याशित दोस्तियां हो सकती हैं।`,
-        minLength: 1000
-      }
+            minLength: 1000
+        }
     ],
     Kindness: [
-      {
-        template: `In a beautiful meadow where flowers danced in the breeze, there lived a gentle {animal} named {name}. {name} had the biggest heart in all the land and loved helping others.
+        {
+            template: `In a beautiful meadow where flowers danced in the breeze, there lived a gentle {animal} named {name}. {name} had the biggest heart in all the land and loved helping others.
 
 One day, {name} noticed that some of the smaller animals were having trouble reaching the sweetest berries that grew high up in the trees. Without hesitation, {name} decided to help them.
 
@@ -134,7 +131,7 @@ As time went by, {name} discovered that even the smallest acts of kindness could
 And so, {name} the {animal} continued spreading kindness wherever they went, making the world a better place, one good deed at a time.
 
 Remember, little one, just like {name}, you too have the power to make the world a kinder place with your actions and words.`,
-        hindiTemplate: `एक सुंदर मैदान में जहाँ फूल हवा में नाचते थे, एक दयालु {animal} रहता था जिसका नाम {name} था। {name} के पास पूरी धरती में सबसे बड़ा दिल था और वह दूसरों की मदद करना पसंद करता था।
+            hindiTemplate: `एक सुंदर मैदान में जहाँ फूल हवा में नाचते थे, एक दयालु {animal} रहता था जिसका नाम {name} था। {name} के पास पूरी धरती में सबसे बड़ा दिल था और वह दूसरों की मदद करना पसंद करता था।
 
 एक दिन, {name} ने देखा कि कुछ छोटे जानवरों को पेड़ों पर ऊंचाई पर लगे मीठे बेर तक पहुंचने में परेशानी हो रही थी। बिना किसी हिचकिचाहट के, {name} ने उनकी मदद करने का फैसला किया।
 
@@ -151,12 +148,45 @@ Remember, little one, just like {name}, you too have the power to make the world
 और इस तरह, {name} नाम का {animal} जहां भी जाता, दयालुता फैलाता रहा, एक अच्छे काम के साथ दुनिया को बेहतर बनाता रहा।
 
 याद रखो, छोटे, {name} की तरह, तुम्हारे पास भी अपने कार्यों और शब्दों से दुनिया को एक दयालु स्थान बनाने की शक्ति है।`,
-        minLength: 1000
-      }
+            minLength: 1000
+        },
+        {
+            template: `In a bustling city park, there lived a gentle {animal} named {name}. Unlike the other city animals who were always in a rush, {name} was known for taking time to notice when someone needed help.
+
+One rainy morning, {name} spotted a tiny lost sparrow taking shelter under a leaf. The poor bird was shivering and couldn't find its way home because the rain had made all the buildings look different. Without hesitation, {name} offered to help.
+
+Using their knowledge of the city, {name} led the sparrow from building to building, carefully avoiding the busy streets. They asked other animals for directions and shared their umbrella with anyone they met who was caught in the rain.
+
+Along their journey, more animals joined them - a damp squirrel, a wet rabbit, and even a dripping wet mouse. {name} made sure everyone stayed warm and safe under their big umbrella as they searched for the sparrow's home.
+
+Finally, they found the sparrow's nest high up in an old oak tree. The sparrow's family was overjoyed to see their little one return. They were so grateful to {name} that they spread the word about their kindness throughout the park.
+
+From that day on, whenever it rained in the park, animals would gather under {name}'s umbrella, sharing stories and helping others find their way. The park became known as a place where no one ever had to face a stormy day alone.
+
+{name} discovered that a simple act of kindness, like sharing an umbrella, could create a ripple of goodness that spread throughout the entire park. Their small gesture had turned strangers into friends and made the busy city feel more like home.
+
+Sweet dreams, caring one. Remember that like {name}, your kindness can bring warmth and light to others, even on the rainiest of days.`,
+            hindiTemplate: `एक व्यस्त शहर के पार्क में एक दयालु {animal} रहता था जिसका नाम {name} था। अन्य शहरी जानवरों की तरह जो हमेशा जल्दी में रहते थे, {name} किसी को मदद की जरूरत होने पर ध्यान देने के लिए जाना जाता था।
+
+एक बारिश की सुबह, {name} ने एक पत्ते के नीचे शरण लेते हुए एक छोटी खोई हुई चिड़िया को देखा। बेचारी चिड़िया कांप रही थी और बारिश के कारण सभी इमारतें अलग दिखने के कारण अपना घर नहीं ढूंढ पा रही थी। बिना किसी हिचकिचाहट के, {name} ने मदद करने की पेशकश की।
+
+शहर के बारे में अपने ज्ञान का उपयोग करते हुए, {name} चिड़िया को एक इमारत से दूसरी इमारत तक ले गया, व्यस्त सड़कों से सावधानी से बचते हुए। उन्होंने दिशाओं के लिए अन्य जानवरों से पूछा और बारिश में फंसे किसी भी व्यक्ति के साथ अपनी छतरी साझा की।
+
+उनकी यात्रा के दौरान, और जानवर उनके साथ जुड़ गए - एक नम गिलहरी, एक गीला खरगोश, और यहां तक कि एक भीगा हुआ चूहा। चिड़िया के घर की तलाश करते समय {name} ने सुनिश्चित किया कि हर कोई उनकी बड़ी छतरी के नीचे गरम और सुरक्षित रहे।
+
+आखिरकार, उन्होंने एक पुराने बलूत के पेड़ पर ऊंचाई पर चिड़िया का घोंसला खोज लिया। चिड़िया का परिवार अपने छोटे को वापस देखकर बहुत खुश था। वे {name} की दयालुता के लिए इतने आभारी थे कि उन्होंने पूरे पार्क में उनकी दयालुता के बारे में बात फैला दी।
+
+उस दिन से, जब भी पार्क में बारिश होती, जानवर {name} की छतरी के नीचे इकट्ठा होते, कहानियां साझा करते और दूसरों को रास्ता खोजने में मदद करते। पार्क एक ऐसी जगह के रूप में जाना जाने लगा जहां किसी को भी तूफानी दिन का सामना अकेले नहीं करना पड़ता था।
+
+{name} ने पाया कि दयालुता का एक साधारण कार्य, जैसे छतरी साझा करना, अच्छाई की एक लहर पैदा कर सकता है जो पूरे पार्क में फैल जाती है। उनके छोटे से इशारे ने अजनबियों को दोस्त बना दिया और व्यस्त शहर को घर जैसा महसूस कराया।
+
+शुभ रात्रि, देखभाल करने वाले। याद रखो कि {name} की तरह, आपकी दयालुता सबसे बारिश वाले दिनों में भी दूसरों के लिए गर्मी और रोशनी ला सकती है।`,
+            minLength: 1000
+        }
     ],
     Adventure: [
-      {
-        template: `Deep in the heart of a mysterious land, there lived an adventurous {animal} named {name}. {name} had always dreamed of exploring the unknown and discovering hidden treasures.
+        {
+            template: `Deep in the heart of a mysterious land, there lived an adventurous {animal} named {name}. {name} had always dreamed of exploring the unknown and discovering hidden treasures.
 
 One morning, {name} found an old map tucked beneath a giant mushroom. The map showed the way to a legendary rainbow waterfall, where magical creatures were said to gather and play.
 
@@ -173,7 +203,7 @@ The adventurers spent the rest of the day playing in the rainbow mist, making ne
 That night, as {name} headed home with their new friends, they realized that the greatest treasure wasn't at the end of the map - it was the adventure itself and the friendships they made along the way.
 
 Sweet dreams, brave one. Remember that like {name}, you too can find magic and wonder in every adventure, big or small.`,
-        hindiTemplate: `एक रहस्यमयी भूमि के दिल में, एक साहसी {animal} रहता था जिसका नाम {name} था।
+            hindiTemplate: `एक रहस्यमयी भूमि के दिल में, एक साहसी {animal} रहता था जिसका नाम {name} था।
 
 {name} हमेशा से अज्ञात की खोज और छिपे हुए खजाने की खोज का सपना देखता था।
 
@@ -192,12 +222,49 @@ Sweet dreams, brave one. Remember that like {name}, you too can find magic and w
 उस रात, जब {name} अपने नए दोस्तों के साथ घर की ओर चला, उसे एहसास हुआ कि सबसे बड़ा खजाना नक्शे के अंत में नहीं था - वह था साहसिक यात्रा और रास्ते में बनी दोस्तियां।
 
 शुभ रात्रि, बहादुर। याद रखो कि {name} की तरह, तुम भी हर साहसिक कार्य में, चाहे वह छोटा हो या बड़ा, जादू और आश्चर्य पा सकते हो।`,
-        minLength: 1000
-      }
+            minLength: 1000
+        },
+        {
+            template: `High in the clouds above a mysterious floating island, there lived a brave {animal} named {name}. {name} had heard tales of a magical crystal that could make the impossible possible, hidden somewhere among the floating islands of the sky kingdom.
+
+One starlit evening, while watching shooting stars streak across the night sky, {name} noticed something unusual - a glowing map appearing in the trail of stardust. The map showed a path through the floating islands, leading to what looked like a crystal palace in the clouds.
+
+Excited by this magical discovery, {name} prepared for their sky adventure. They gathered floating berries that would help them hop between islands, collected glowing cloud-cotton for light, and borrowed a pair of wind-riding goggles from their wise owl friend.
+
+The journey through the sky kingdom was more amazing than {name} could have imagined. They bounced on bouncy cloud trampolines, slid down rainbow bridges, and hitched rides on friendly passing comets. Each floating island held new wonders - singing flowers that floated in mid-air, crystal butterflies that left trails of sparkles, and even a group of cloud-shaping dragons who helped guide the way.
+
+As {name} traveled higher and higher, they encountered other sky explorers who joined their quest. Together, they solved the riddles of the wind spirits, danced with aurora lights, and helped lost star fragments find their way back to their constellations.
+
+Finally, after crossing a bridge made of moonbeams, {name} and their new friends reached the crystal palace. But instead of finding just one magical crystal, they discovered something even more wonderful - a garden of growing crystals, each one containing different types of magic.
+
+The guardian of the crystal palace appeared - a wise phoenix who had been watching their journey. The phoenix explained that the real magic wasn't in the crystals themselves, but in the courage, kindness, and friendship {name} had shown throughout their adventure.
+
+As a reward for their brave and caring heart, the phoenix gave {name} a small crystal to take home. But {name} realized they had already received the greatest gift - an amazing adventure and new friends who made the whole sky kingdom feel like home.
+
+Sweet dreams, brave adventurer. Remember that like {name}, the greatest treasures are often found not at the journey's end, but in the magical moments and friendships we make along the way.`,
+            hindiTemplate: `रहस्यमयी उड़ते द्वीप के ऊपर बादलों में, एक बहादुर {animal} रहता था जिसका नाम {name} था। {name} ने एक जादुई क्रिस्टल की कहानियां सुनी थीं जो असंभव को संभव बना सकता था, जो आकाश राज्य के उड़ते द्वीपों के बीच कहीं छिपा था।
+
+एक तारों भरी शाम, जब रात के आसमान में टूटते तारों को देख रहे थे, {name} ने कुछ असामान्य देखा - तारों की धूल के पीछे एक चमकता हुआ नक्शा दिखाई दिया। नक्शे में उड़ते द्वीपों के बीच एक रास्ता दिखाया गया था, जो बादलों में एक क्रिस्टल महल की तरफ ले जाता था।
+
+इस जादुई खोज से उत्साहित, {name} ने अपनी आकाशीय साहसिक यात्रा के लिए तैयारी की। उन्होंने उड़ने वाली बेरियां इकट्ठा कीं जो उन्हें द्वीपों के बीच कूदने में मदद करेंगी, रोशनी के लिए चमकता हुआ बादल-कपास इकट्ठा किया, और अपने बुद्धिमान उल्लू दोस्त से हवा में उड़ने वाला चश्मा उधार लिया।
+
+आकाश राज्य के माध्यम से यात्रा {name} की कल्पना से भी अधिक अद्भुत थी। वे उछलते बादल ट्रैम्पोलीन पर कूदे, इंद्रधनुष के पुलों पर फिसले, और दोस्ताना धूमकेतुओं पर सवारी की। हर उड़ते द्वीप में नए चमत्कार थे - हवा में तैरते गाते फूल, क्रिस्टल तितलियां जो चमक की लकीरें छोड़ती थीं, और यहां तक कि बादल-आकार देने वाले ड्रैगन जो रास्ता दिखाने में मदद करते थे।
+
+जैसे-जैसे {name} ऊपर और ऊपर यात्रा करते गए, उन्हें अन्य आकाश खोजी मिले जो उनकी खोज में शामिल हो गए। साथ मिलकर, उन्होंने हवा की आत्माओं की पहेलियां सुलझाईं, ऑरोरा रोशनी के साथ नृत्य किया, और खोए हुए तारों के टुकड़ों को उनके नक्षत्रों में वापस जाने में मदद की।
+
+आखिरकार, चांदनी की किरणों से बने पुल को पार करने के बाद, {name} और उनके नए दोस्त क्रिस्टल महल तक पहुंचे। लेकिन सिर्फ एक जादुई क्रिस्टल की बजाय, उन्होंने कुछ और भी अद्भुत खोजा - बढ़ते क्रिस्टल का एक बगीचा, जिसमें हर एक में अलग-अलग प्रकार का जादू था।
+
+क्रिस्टल महल का रक्षक प्रकट हुआ - एक बुद्धिमान फीनिक्स जो उनकी यात्रा को देख रहा था। फीनिक्स ने समझाया कि असली जादू क्रिस्टल में नहीं था, बल्कि {name} ने अपनी साहसिक यात्रा के दौरान जो साहस, दयालुता और दोस्ती दिखाई थी, उसमें था।
+
+उनके बहादुर और देखभाल करने वाले दिल के लिए इनाम के रूप में, फीनिक्स ने {name} को घर ले जाने के लिए एक छोटा क्रिस्टल दिया। लेकिन {name} को एहसास हुआ कि उन्हें पहले ही सबसे बड़ा उपहार मिल चुका था - एक अद्भुत साहसिक यात्रा और नए दोस्त जिन्होंने पूरे आकाश राज्य को घर जैसा महसूस कराया।
+
+शुभ रात्रि, बहादुर साहसी। याद रखो कि {name} की तरह, सबसे बड़े खजाने अक्सर यात्रा के अंत में नहीं, बल्कि रास्ते में बनाए गए जादुई पलों और दोस्तियों में मिलते हैं।`,
+            minLength: 1000
+        }
     ],
     Bedtime: [
-      {
-        template: `As the sun began to set in the peaceful woodland, a sleepy little {animal} named {name} was getting ready for bed. {name} loved bedtime because it meant cozy moments and sweet dreams ahead.
+        {
+            template: `As the sun began to set in the peaceful woodland, a sleepy little {animal} named {name} was getting ready for bed. {name} loved bedtime because it meant cozy moments and sweet dreams ahead.
 
 {name} had their own special bedtime routine. First, they would take a warm bath in the nearby stream, letting the gentle water wash away the day's adventures. Then, they would dry off with soft leaves and put on their favorite starry pajamas.
 
@@ -212,7 +279,7 @@ The moon peeked through the branches, casting a silver glow over {name}'s bed. T
 The night wrapped around {name} like a warm hug, and they felt safe and loved. Their breathing became slow and steady as sleep began to take over. In the quiet of the night, {name} drifted off to dreamland, where magical adventures awaited.
 
 Sweet dreams, precious one. Like {name}, may you have the coziest sleep and the sweetest dreams tonight.`,
-        hindiTemplate: `जैसे ही सूरज शांत जंगल में ढलने लगा, एक नींद भरा छोटा {animal} जिसका नाम {name} था, सोने की तैयारी कर रहा था। {name} को सोने का समय बहुत पसंद था क्योंकि इसका मतलब था आरामदायक पल और मीठे सपने।
+            hindiTemplate: `जैसे ही सूरज शांत जंगल में ढलने लगा, एक नींद भरा छोटा {animal} जिसका नाम {name} था, सोने की तैयारी कर रहा था। {name} को सोने का समय बहुत पसंद था क्योंकि इसका मतलब था आरामदायक पल और मीठे सपने।
 
 {name} की अपनी खास सोने की दिनचर्या थी। पहले, वह पास की नदी में गर्म स्नान करता, कोमल पानी को दिन के साहसिक कार्यों को धोने देता। फिर, वह नरम पत्तों से सूखता और अपना पसंदीदा तारों वाला नाइट सूट पहनता।
 
@@ -227,12 +294,12 @@ Sweet dreams, precious one. Like {name}, may you have the coziest sleep and the 
 रात ने {name} को गर्म आलिंगन की तरह लपेट लिया, और उसे सुरक्षित और प्यारा महसूस हुआ। उसकी सांसें धीमी और स्थिर हो गईं जैसे नींद धीरे-धीरे आने लगी। रात की शांति में, {name} सपनों की दुनिया में चला गया, जहां जादुई साहसिक कार्य उसका इंतजार कर रहे थे।
 
 शुभ रात्रि, प्यारे। {name} की तरह, तुम्हें भी सबसे आरामदायक नींद और सबसे मीठे सपने मिलें।`,
-        minLength: 1000
-      }
+            minLength: 1000
+        }
     ],
     Sharing: [
-      {
-        template: `Once there was a thoughtful {animal} named {name} who lived in a beautiful garden. {name} had a special talent for growing the most delicious fruits and vegetables in all the land.
+        {
+            template: `Once there was a thoughtful {animal} named {name} who lived in a beautiful garden. {name} had a special talent for growing the most delicious fruits and vegetables in all the land.
 
 {name}'s garden was filled with juicy berries, crunchy carrots, and sweet apples. Every day, {name} would tend to the plants with love and care, making sure each one got enough water and sunshine.
 
@@ -249,7 +316,7 @@ As everyone shared the feast together, something magical happened. The animals b
 The garden flourished even more because when everyone shared and worked together, there was always enough for all. {name} learned that sharing not only helped others but made their own heart grow bigger too.
 
 Sweet dreams, generous one. Remember that like {name}, when you share with others, you help make the world a better and happier place for everyone.`,
-        hindiTemplate: `एक बार एक विचारशील {animal} था जिसका नाम {name} था जो एक सुंदर बगीचे में रहता था। {name} को सबसे स्वादिष्ट फल और सब्जियां उगाने की विशेष प्रतिभा थी।
+            hindiTemplate: `एक बार एक विचारशील {animal} था जिसका नाम {name} था जो एक सुंदर बगीचे में रहता था। {name} को सबसे स्वादिष्ट फल और सब्जियां उगाने की विशेष प्रतिभा थी।
 
 {name} का बगीचा रसीले बेर, कुरकुरे गाजर, और मीठे सेब से भरा था। हर दिन, {name} प्यार और देखभाल से पौधों की देखभाल करता, यह सुनिश्चित करता कि हर एक को पर्याप्त पानी और धूप मिले।
 
@@ -266,12 +333,12 @@ Sweet dreams, generous one. Remember that like {name}, when you share with other
 बगीचा और भी फला-फूला क्योंकि जब सभी ने साझा किया और मिलकर काम किया, तो सभी के लिए हमेशा पर्याप्त था। {name} ने सीखा कि साझा करने से न केवल दूसरों की मदद होती है बल्कि उनका अपना दिल भी बड़ा हो जाता है।
 
 शुभ रात्रि, उदार। याद रखो कि {name} की तरह, जब आप दूसरों के साथ साझा करते हैं, तो आप सभी के लिए दुनिया को एक बेहतर और खुशहाल जगह बनाने में मदद करते हैं।`,
-        minLength: 1000
-      }
+            minLength: 1000
+        }
     ],
     Courage: [
-      {
-        template: `In a cozy corner of the world lived a young {animal} named {name}. Although {name} was small, they had a heart full of courage waiting to be discovered.
+        {
+            template: `In a cozy corner of the world lived a young {animal} named {name}. Although {name} was small, they had a heart full of courage waiting to be discovered.
 
 One day, a big storm came to the forest, and many of the smaller animals were scared. Even though {name} felt a little nervous too, they knew they had to be brave to help their friends.
 
@@ -288,7 +355,7 @@ When the storm finally passed, and the sun peeked through the clouds, all the an
 From that day on, {name} was known throughout the forest not just as a brave {animal}, but as someone who helped others find their own courage too.
 
 Remember, little one, just like {name}, you have more courage than you know. Sometimes being brave means helping others, even when you're a little scared yourself.`,
-        hindiTemplate: `दुनिया के एक आरामदायक कोने में एक युवा {animal} रहता था जिसका नाम {name} था। हालांकि {name} छोटा था, उसके दिल में खोजी जाने वाली साहस से भरी थी।
+            hindiTemplate: `दुनिया के एक आरामदायक कोने में एक युवा {animal} रहता था जिसका नाम {name} था। हालांकि {name} छोटा था, उसके दिल में खोजी जाने वाली साहस से भरी थी।
 
 एक दिन, जंगल में एक बड़ा तूफान आया, और कई छोटे जानवर डर गए। हालांकि {name} भी थोड़ा घबराया हुआ था, लेकिन वह जानता था कि उसे अपने दोस्तों की मदद के लिए बहादुर बनना होगा।
 
@@ -305,15 +372,15 @@ Remember, little one, just like {name}, you have more courage than you know. Som
 उस दिन से, {name} को जंगल में न केवल एक बहादुर {animal} के रूप में जाना जाता था, बल्कि ऐसे किसी के रूप में भी जाना जाता था जो दूसरों को अपना साहस खोजने में मदद करता था।
 
 याद रखो, छोटे, {name} की तरह, तुम्हारे पास तुम्हारी जानकारी से कहीं ज्यादा साहस है। कभी-कभी बहादुर होने का मतलब दूसरों की मदद करना होता है, भले ही तुम खुद थोड़ा डरे हुए हो।`,
-        minLength: 1000
-      }
+            minLength: 1000
+        }
     ]
-  };
+};
 
-  export function generateStory(values: InsertStory): string {
+export function generateStory(values: InsertStory): string {
     const themeTemplates = templates[values.theme as keyof typeof templates];
     if (!themeTemplates || themeTemplates.length === 0) {
-      throw new Error(`No templates found for theme: ${values.theme}`);
+        throw new Error(`No templates found for theme: ${values.theme}`);
     }
 
     // Select a random template from available ones for this theme
@@ -321,27 +388,27 @@ Remember, little one, just like {name}, you have more courage than you know. Som
     const template = values.language === 'hi' ? templateData.hindiTemplate : templateData.template;
 
     if (!template) {
-      throw new Error(`No template found for language: ${values.language}`);
+        throw new Error(`No template found for language: ${values.language}`);
     }
 
     // Replace placeholders with actual values
     return template
-      .replace(/{name}/g, values.childName)
-      .replace(/{animal}/g, values.animal);
-  }
+        .replace(/{name}/g, values.childName)
+        .replace(/{animal}/g, values.animal);
+}
 
 function translateAnimalToHindi(animal: string): string {
-  const animalTranslations: Record<string, string> = {
-    Lion: 'शेर',
-    Elephant: 'हाथी',
-    Giraffe: 'जिराफ़',
-    Penguin: 'पेंगुइन',
-    Rabbit: 'खरगोश',
-    Bear: 'भालू',
-    Fox: 'लोमड़ी',
-    Owl: 'उल्लू',
-    Turtle: 'कछुआ',
-    Monkey: 'बंदर'
-  };
-  return animalTranslations[animal] || animal;
+    const animalTranslations: Record<string, string> = {
+        Lion: 'शेर',
+        Elephant: 'हाथी',
+        Giraffe: 'जिराफ़',
+        Penguin: 'पेंगुइन',
+        Rabbit: 'खरगोश',
+        Bear: 'भालू',
+        Fox: 'लोमड़ी',
+        Owl: 'उल्लू',
+        Turtle: 'कछुआ',
+        Monkey: 'बंदर'
+    };
+    return animalTranslations[animal] || animal;
 }
