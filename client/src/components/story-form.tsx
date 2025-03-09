@@ -67,9 +67,13 @@ export function StoryForm() {
                 name="childName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Child's Name</FormLabel>
+                    <FormLabel className="text-base">Child's Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter name..." {...field} />
+                      <Input 
+                        placeholder="Enter name..." 
+                        {...field} 
+                        className="h-12 text-base px-4"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -81,19 +85,24 @@ export function StoryForm() {
                 name="animal"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Favorite Animal</FormLabel>
+                    <FormLabel className="text-base">Favorite Animal</FormLabel>
                     <Select 
                       onValueChange={field.onChange} 
                       value={field.value}
+                      defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-12 text-base">
                           <SelectValue placeholder="Select an animal" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent className="max-h-[300px]">
                         {animals.map((animal) => (
-                          <SelectItem key={animal} value={animal}>
+                          <SelectItem 
+                            key={animal} 
+                            value={animal}
+                            className="py-3 text-base cursor-pointer hover:bg-primary/10 focus:bg-primary/10"
+                          >
                             {animal}
                           </SelectItem>
                         ))}
@@ -109,19 +118,24 @@ export function StoryForm() {
                 name="theme"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Story Theme</FormLabel>
+                    <FormLabel className="text-base">Story Theme</FormLabel>
                     <Select 
                       onValueChange={field.onChange} 
                       value={field.value}
+                      defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-12 text-base">
                           <SelectValue placeholder="Select a theme" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent className="max-h-[300px]">
                         {storyThemes.map((theme) => (
-                          <SelectItem key={theme} value={theme}>
+                          <SelectItem 
+                            key={theme} 
+                            value={theme}
+                            className="py-3 text-base cursor-pointer hover:bg-primary/10 focus:bg-primary/10"
+                          >
                             {theme}
                           </SelectItem>
                         ))}
@@ -134,7 +148,7 @@ export function StoryForm() {
 
               <Button 
                 type="submit" 
-                className="w-full bg-primary hover:bg-primary/90"
+                className="w-full bg-primary hover:bg-primary/90 h-12 text-base"
                 disabled={form.formState.isSubmitting}
               >
                 {form.formState.isSubmitting ? "Creating..." : "Generate Story"}
