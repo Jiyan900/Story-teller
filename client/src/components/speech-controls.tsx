@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Play, Pause, StopCircle, Volume2, Globe2 } from 'lucide-react';
+import { useState } from 'react';
+import { Play, Pause, StopCircle, Globe2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
@@ -45,34 +45,7 @@ export function SpeechControls({ text }: SpeechControlsProps) {
   const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
   const { toast } = useToast();
 
-  useEffect(() => {
-    // Load ResponsiveVoice script
-    const script = document.createElement('script');
-    script.src = 'https://code.responsivevoice.org/responsivevoice.js?key=HmYz4YHq';
-    script.async = true;
-    document.body.appendChild(script);
-
-    script.onload = () => {
-      if (!window.responsiveVoice?.voiceSupport()) {
-        toast({
-          title: "Not Supported",
-          description: "Text-to-speech is not supported in your browser.",
-          variant: "destructive",
-        });
-      }
-    };
-
-    return () => {
-      if (window.responsiveVoice) {
-        window.responsiveVoice.cancel();
-      }
-      document.body.removeChild(script);
-    };
-  }, [toast]);
-
   const speak = () => {
-    if (!window.responsiveVoice) return;
-
     try {
       const language = languages.find(lang => lang.code === selectedLanguage);
       if (!language) return;
@@ -93,7 +66,7 @@ export function SpeechControls({ text }: SpeechControlsProps) {
       console.error('Speech synthesis error:', error);
       toast({
         title: "Error",
-        description: "Your browser doesn't support text-to-speech.",
+        description: "Failed to play speech. Please try again.",
         variant: "destructive",
       });
     }
@@ -105,10 +78,6 @@ export function SpeechControls({ text }: SpeechControlsProps) {
       setIsPlaying(false);
     }
   };
-
-  if (!window.responsiveVoice?.voiceSupport()) {
-    return null;
-  }
 
   return (
     <div className="flex flex-wrap items-center gap-4 my-4">
