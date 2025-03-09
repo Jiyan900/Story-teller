@@ -12,7 +12,8 @@ const containerVariants = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2
+      staggerChildren: 0.2,
+      delayChildren: 0.3
     }
   }
 };
@@ -41,6 +42,18 @@ const paragraphVariants = {
   }
 };
 
+const cardVariants = {
+  hidden: { opacity: 0, scale: 0.95 },
+  show: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.4, 0, 0.2, 1]
+    }
+  }
+};
+
 export function StoryCard({ story }: StoryCardProps) {
   return (
     <motion.div
@@ -48,6 +61,7 @@ export function StoryCard({ story }: StoryCardProps) {
       animate="show"
       variants={containerVariants}
     >
+      <motion.div variants={cardVariants}> {/* Added motion.div and variants */}
       <Card className="max-w-4xl mx-auto my-8 bg-white/80 backdrop-blur-sm shadow-lg border-primary/20">
         <CardHeader>
           <motion.div variants={titleVariants}>
@@ -74,6 +88,7 @@ export function StoryCard({ story }: StoryCardProps) {
           </motion.div>
         </CardContent>
       </Card>
+      </motion.div> {/*Closing motion.div */}
     </motion.div>
   );
 }

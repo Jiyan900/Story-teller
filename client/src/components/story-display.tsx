@@ -36,11 +36,24 @@ const sparkleAnimation = {
   },
 };
 
-const fadeInScale = {
-  initial: { opacity: 0, scale: 0.8 },
-  animate: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 0.8 },
-  transition: { duration: 0.5 },
+const pageTransition = {
+  initial: { opacity: 0, scale: 0.95 },
+  animate: { 
+    opacity: 1, 
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.4, 0, 0.2, 1],
+    }
+  },
+  exit: { 
+    opacity: 0, 
+    scale: 0.95,
+    transition: {
+      duration: 0.3,
+      ease: [0.4, 0, 1, 1],
+    }
+  }
 };
 
 function DecoElement({ 
@@ -62,9 +75,13 @@ function DecoElement({
     <motion.div
       className={`absolute ${className}`}
       animate={animate}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay }}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ 
+        delay,
+        duration: 0.5,
+        ease: "easeOut"
+      }}
     >
       <Icon size={size} className="text-primary/40" color={color} />
     </motion.div>
@@ -73,8 +90,11 @@ function DecoElement({
 
 export function StoryDisplay({ story }: StoryDisplayProps) {
   return (
-    <AnimatePresence>
-      <div className="relative w-full max-w-4xl mx-auto">
+    <AnimatePresence mode="wait">
+      <motion.div 
+        className="relative w-full max-w-4xl mx-auto"
+        {...pageTransition}
+      >
         {/* Decorative elements with staggered animations */}
         <DecoElement
           Icon={Star}
@@ -128,45 +148,49 @@ export function StoryDisplay({ story }: StoryDisplayProps) {
 
         {/* Main story content */}
         <motion.div
-          {...fadeInScale}
           className="relative z-10"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ 
+            duration: 0.6,
+            delay: 0.3,
+            ease: "easeOut"
+          }}
         >
           <StoryCard story={story} />
         </motion.div>
 
         {/* Animated background decoration */}
-        <div className="absolute inset-0 -z-10 overflow-hidden">
-          <motion.div
-            className="absolute top-0 left-0 w-full h-full"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.1 }}
-            transition={{ duration: 1 }}
-          >
-            <motion.div 
-              className="absolute inset-0" 
-              style={{
-                backgroundImage: `
-                  radial-gradient(circle at 50% 50%, var(--primary) 1px, transparent 1px),
-                  radial-gradient(circle at 0% 0%, var(--primary) 2px, transparent 2px),
-                  radial-gradient(circle at 100% 100%, var(--primary) 2px, transparent 2px)
-                `,
-                backgroundSize: '50px 50px, 100px 100px, 70px 70px',
-              }}
-              animate={{
-                backgroundPosition: [
-                  '0 0, 0 0, 0 0',
-                  '25px 25px, 50px 50px, -35px -35px'
-                ],
-              }}
-              transition={{
-                duration: 20,
-                ease: "linear",
-                repeat: Infinity,
-              }}
-            />
-          </motion.div>
-        </div>
-      </div>
+        <motion.div 
+          className="absolute inset-0 -z-10 overflow-hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          <motion.div 
+            className="absolute inset-0" 
+            style={{
+              backgroundImage: `
+                radial-gradient(circle at 50% 50%, var(--primary) 1px, transparent 1px),
+                radial-gradient(circle at 0% 0%, var(--primary) 2px, transparent 2px),
+                radial-gradient(circle at 100% 100%, var(--primary) 2px, transparent 2px)
+              `,
+              backgroundSize: '50px 50px, 100px 100px, 70px 70px',
+            }}
+            animate={{
+              backgroundPosition: [
+                '0 0, 0 0, 0 0',
+                '25px 25px, 50px 50px, -35px -35px'
+              ]
+            }}
+            transition={{
+              duration: 20,
+              ease: "linear",
+              repeat: Infinity,
+            }}
+          />
+        </motion.div>
+      </motion.div>
     </AnimatePresence>
   );
 }
