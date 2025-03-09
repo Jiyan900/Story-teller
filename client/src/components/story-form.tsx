@@ -23,20 +23,15 @@ export function StoryForm() {
       animal: undefined,
       theme: undefined,
       content: "",
-      language: "en" // Added default language
+      language: "en" 
     },
   });
 
   async function onSubmit(values: InsertStory) {
     try {
-      // Generate the story content
       const content = generateStory(values);
-
-      // Send to the API
       const response = await apiRequest("POST", "/api/stories", { ...values, content });
       const story = await response.json();
-
-      // Navigate to the story page
       setLocation(`/story/${story.id}`);
     } catch (error) {
       console.error("Error creating story:", error);
@@ -178,7 +173,7 @@ export function StoryForm() {
                           हिंदी (Hindi)
                         </SelectItem>
                         <SelectItem 
-                          value="bn"
+                          value="as"
                           className="py-3 text-base cursor-pointer hover:bg-primary/10 focus:bg-primary/10"
                         >
                           অসমীয়া (Assamese)

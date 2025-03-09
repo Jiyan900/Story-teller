@@ -8,11 +8,11 @@ interface SpeechControlsProps {
   language?: string;
 }
 
-// Simplified voice selection using basic supported voices
+// Updated voice mapping with appropriate voices for each language
 const voiceMap = {
   'en': 'US English Female',
   'hi': 'Hindi Female',
-  'bn': 'Bengali Female'
+  'as': 'Hindi Female', // Using Hindi as fallback for Assamese since it's more widely understood in Assam
 };
 
 declare global {
@@ -83,7 +83,7 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
         window.responsiveVoice.speak('Testing text to speech', voiceMap[language as keyof typeof voiceMap], {
           onstart: () => console.log('Test speech started'),
           onend: () => console.log('Test speech completed'),
-          onerror: (error) => console.error('Test speech error:', error)
+          onerror: (error: any) => console.error('Test speech error:', error)
         });
       } else {
         throw new Error('ResponsiveVoice not available');
