@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Play, Pause, StopCircle, Volume2 } from 'lucide-react';
+import { Play, Pause, StopCircle, Volume2, Globe2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
@@ -8,10 +8,29 @@ interface SpeechControlsProps {
   text: string;
 }
 
+type Language = {
+  code: string;
+  name: string;
+};
+
+const languages: Language[] = [
+  { code: 'en', name: 'English' },
+  { code: 'es', name: 'Spanish' },
+  { code: 'fr', name: 'French' },
+  { code: 'de', name: 'German' },
+  { code: 'it', name: 'Italian' },
+  { code: 'pt', name: 'Portuguese' },
+  { code: 'ru', name: 'Russian' },
+  { code: 'zh', name: 'Chinese' },
+  { code: 'ja', name: 'Japanese' },
+  { code: 'ko', name: 'Korean' },
+];
+
 export function SpeechControls({ text }: SpeechControlsProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoice, setSelectedVoice] = useState<string>('');
+  const [selectedLanguage, setSelectedLanguage] = useState<string>('en');
   const { toast } = useToast();
 
   useEffect(() => {
@@ -30,10 +49,10 @@ export function SpeechControls({ text }: SpeechControlsProps) {
       const availableVoices = window.speechSynthesis.getVoices();
       if (availableVoices.length > 0) {
         setVoices(availableVoices);
-        // Select the first English voice as default
-        const englishVoice = availableVoices.find(voice => voice.lang.startsWith('en'));
-        if (englishVoice) {
-          setSelectedVoice(englishVoice.name);
+        // Select the first voice for the current language
+        const languageVoice = availableVoices.find(voice => voice.lang.startsWith(selectedLanguage));
+        if (languageVoice) {
+          setSelectedVoice(languageVoice.name);
         }
       }
     }
@@ -50,7 +69,7 @@ export function SpeechControls({ text }: SpeechControlsProps) {
         window.speechSynthesis.cancel();
       }
     };
-  }, [toast]);
+  }, [selectedLanguage, toast]);
 
   const speak = () => {
     if (!window.speechSynthesis) return;
@@ -60,6 +79,7 @@ export function SpeechControls({ text }: SpeechControlsProps) {
       const voice = voices.find(v => v.name === selectedVoice);
       if (voice) {
         utterance.voice = voice;
+        utterance.lang = voice.lang;
       }
 
       utterance.onend = () => setIsPlaying(false);
@@ -99,12 +119,14 @@ export function SpeechControls({ text }: SpeechControlsProps) {
     }
   };
 
+  const filteredVoices = voices.filter(voice => voice.lang.startsWith(selectedLanguage));
+
   if (!window.speechSynthesis) {
     return null;
   }
 
   return (
-    <div className="flex items-center gap-4 my-4">
+    <div className="flex flex-wrap items-center gap-4 my-4">
       <div className="flex items-center gap-2">
         {!isPlaying ? (
           <Button
@@ -137,17 +159,43 @@ export function SpeechControls({ text }: SpeechControlsProps) {
       </div>
 
       <div className="flex items-center gap-2">
+        <Globe2 className="h-5 w-5 text-muted-foreground" />
+        <Select
+          value={selectedLanguage}
+          onValueChange={(value) => {
+            setSelectedLanguage(value);
+            setSelectedVoice(''); // Reset voice when language changes
+          }}
+        >
+          <SelectTrigger className="w-[200px]">
+            <SelectValue placeholder="Select a language" />
+          </SelectTrigger>
+          <SelectContent>
+            {languages.map((lang) => (
+              <SelectItem 
+                key={lang.code} 
+                value={lang.code}
+                disabled={!voices.some(voice => voice.lang.startsWith(lang.code))}
+              >
+                {lang.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="flex items-center gap-2">
         <Volume2 className="h-5 w-5 text-muted-foreground" />
         <Select
           value={selectedVoice}
           onValueChange={setSelectedVoice}
-          disabled={voices.length === 0}
+          disabled={filteredVoices.length === 0}
         >
           <SelectTrigger className="w-[200px]">
             <SelectValue placeholder="Select a voice" />
           </SelectTrigger>
           <SelectContent>
-            {voices.map((voice) => (
+            {filteredVoices.map((voice) => (
               <SelectItem key={voice.name} value={voice.name}>
                 {voice.name}
               </SelectItem>
