@@ -15,23 +15,30 @@ import { apiRequest } from "@/lib/queryClient";
 export function StoryForm() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
-  
+
   const form = useForm<InsertStory>({
     resolver: zodResolver(storyFormSchema),
     defaultValues: {
       childName: "",
-      animal: "Bear",
-      theme: "Bedtime",
+      animal: undefined,
+      theme: undefined,
+      content: "",
     },
   });
 
-  async function onSubmit(data: Omit<InsertStory, "content">) {
+  async function onSubmit(values: Omit<InsertStory, "content">) {
     try {
-      const content = generateStory(data);
-      const story = await apiRequest("POST", "/api/stories", { ...data, content });
-      const result = await story.json();
-      setLocation(`/story/${result.id}`);
+      // Generate the story content
+      const content = generateStory(values);
+
+      // Send to the API
+      const response = await apiRequest("POST", "/api/stories", { ...values, content });
+      const story = await response.json();
+
+      // Navigate to the story page
+      setLocation(`/story/${story.id}`);
     } catch (error) {
+      console.error("Error creating story:", error);
       toast({
         title: "Error",
         description: "Failed to create story. Please try again.",
@@ -46,7 +53,7 @@ export function StoryForm() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Card className="max-w-md mx-auto">
+      <Card className="max-w-md mx-auto bg-white/90 backdrop-blur-sm shadow-xl">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center text-primary">
             Create a Magical Story
@@ -75,7 +82,7 @@ export function StoryForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Favorite Animal</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select an animal" />
@@ -100,7 +107,7 @@ export function StoryForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Story Theme</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select a theme" />
@@ -119,8 +126,12 @@ export function StoryForm() {
                 )}
               />
 
-              <Button type="submit" className="w-full">
-                Generate Story
+              <Button 
+                type="submit" 
+                className="w-full bg-primary hover:bg-primary/90"
+                disabled={form.formState.isSubmitting}
+              >
+                {form.formState.isSubmitting ? "Creating..." : "Generate Story"}
               </Button>
             </form>
           </Form>
