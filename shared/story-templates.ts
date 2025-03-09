@@ -2,6 +2,7 @@ import { type InsertStory } from "./schema";
 
 type Template = {
   template: string;
+  hindiTemplate?: string; // Added Hindi template
   minLength: number;
 };
 
@@ -23,6 +24,23 @@ The forest became a happier place because of {name}'s kindness and friendly natu
 And so, {name} the {animal} discovered that the best gift in the world is having good friends who care about you, just as you care about them.
 
 Sweet dreams, little one. Remember, just like {name}, you too can make wonderful friends by being kind and sharing your heart with others.`,
+      hindiTemplate: `एक समय की बात है, एक जादुई जंगल में एक छोटा {animal} रहता था जिसका नाम {name} था।
+
+{name} एक बहुत ही खास {animal} था जो नए दोस्त बनाना पसंद करता था, लेकिन कभी-कभी थोड़ा शर्मीला महसूस करता था।
+
+एक सुनहरी सुबह, क्रिस्टल जैसी स्वच्छ नदी के पास खेलते हुए, {name} को झाड़ियों में हलकी सरसराहट सुनाई दी। उन्हें आश्चर्य हुआ जब उन्होंने देखा कि अन्य युवा जानवर भी दोस्ती की तलाश में थे।
+
+अपने नए दोस्तों के साथ, {name} ने अद्भुत साहसिक कार्यों में हिस्सा लिया। उन्होंने गिरी हुई पत्तियों से आरामदायक छिपने की जगह बनाई, स्वादिष्ट बेरीज़ साझा कीं, और टिमटिमाते तारों के नीचे मजेदार कहानियां सुनाईं।
+
+जैसे-जैसे दिन बीते, {name} ने सीखा कि सच्ची दोस्ती का मतलब है एक-दूसरे के लिए मौजूद रहना, खुशी और चुनौतीपूर्ण पलों को साझा करना। छोटे {animal} को एहसास हुआ कि हर किसी में कुछ खास है, और यही दोस्ती को जादुई बनाता है।
+
+हर शाम, जब चांद आसमान में ऊंचा उठता, {name} अपने जंगल के दोस्तों के साथ दिन की कहानियां साझा करने के लिए इकट्ठा होता। वे हंसते, खेलते और कल के साहसिक कार्यों के सपने देखते।
+
+{name} की दयालुता और मैत्रीपूर्ण स्वभाव की वजह से जंगल एक खुशहाल जगह बन गया। अन्य जानवर अक्सर कहते थे कि {name} से मिलना खजाना पाने जैसा था - एक सच्चा दोस्त जो हर दिन को और भी खूबसूरत बनाता है।
+
+और इस तरह, {name} नाम के {animal} ने पाया कि दुनिया का सबसे बड़ा तोहफा है अच्छे दोस्तों का होना जो आपकी परवाह करते हैं, जैसे आप उनकी परवाह करते हैं।
+
+शुभ रात्रि, छोटे। याद रखो, {name} की तरह, तुम भी दूसरों के प्रति दयालु बनकर और अपना दिल साझा करके अद्भुत दोस्त बना सकते हो।`,
       minLength: 1000
     }
   ],
@@ -67,6 +85,25 @@ The adventurers spent the rest of the day playing in the rainbow mist, making ne
 That night, as {name} headed home with their new friends, they realized that the greatest treasure wasn't at the end of the map - it was the adventure itself and the friendships they made along the way.
 
 Sweet dreams, brave one. Remember that like {name}, you too can find magic and wonder in every adventure, big or small.`,
+      hindiTemplate: `एक रहस्यमयी भूमि के दिल में, एक साहसी {animal} रहता था जिसका नाम {name} था।
+
+{name} हमेशा से अज्ञात की खोज और छिपे हुए खजाने की खोज का सपना देखता था।
+
+एक सुबह, {name} को एक विशाल मशरूम के नीचे एक पुराना नक्शा मिला। नक्शे में एक किंवदंती इंद्रधनुषी झरने का रास्ता दिखाया गया था, जहां जादुई प्राणियों के एकत्र होने और खेलने की बात कही जाती थी।
+
+आगे की साहसिक यात्रा के लिए उत्साहित, {name} ने नाश्ते का एक छोटा बैग पैक किया और यात्रा पर निकल पड़ा। रास्ते में, उन्होंने झूलते रस्सी के पुल पार किए, ऊंचे पेड़ों पर चढ़े, और चमकदार गुफाओं से होकर गुजरे।
+
+यात्रा के दौरान, {name} अन्य बहादुर जानवरों से मिला जो इस खोज में शामिल हो गए। साथ मिलकर, उन्होंने प्राचीन वन आत्माओं द्वारा छोड़ी गई पहेलियां सुलझाईं और चुनौतीपूर्ण बाधाओं को पार करने में एक-दूसरे की मदद की।
+
+जैसे-जैसे वे जादुई जंगल में गहराई में जाते गए, {name} और उनके साथियों ने अद्भुत रहस्यों की खोज की। उन्होंने धुनें गाने वाले चमकीले फूल, दोस्ताना बादल जो उन्हें सवारी देते, और नृत्य करने वाली जुगनुओं का एक समूह पाया जो उनका रास्ता रोशन करता था।
+
+अंत में, एक रोमांचक यात्रा के बाद, {name} और दोस्त इंद्रधनुषी झरने तक पहुंचे। दृश्य उनकी कल्पना से भी अधिक सुंदर था - इंद्रधनुष के सभी रंगों में पानी गिर रहा था, हवा में जादुई चमक पैदा कर रहा था।
+
+साहसी यात्री पूरे दिन इंद्रधनुषी धुंध में खेलते रहे, जादुई प्राणियों के साथ नई दोस्ती बनाई, और अपनी अद्भुत यात्रा की कहानियां साझा कीं।
+
+उस रात, जब {name} अपने नए दोस्तों के साथ घर की ओर चला, उसे एहसास हुआ कि सबसे बड़ा खजाना नक्शे के अंत में नहीं था - वह था साहसिक यात्रा और रास्ते में बनी दोस्तियां।
+
+शुभ रात्रि, बहादुर। याद रखो कि {name} की तरह, तुम भी हर साहसिक कार्य में, चाहे वह छोटा हो या बड़ा, जादू और आश्चर्य पा सकते हो।`,
       minLength: 1000
     }
   ],
@@ -145,7 +182,34 @@ export function generateStory(storyData: Omit<InsertStory, "content">): string {
   // Randomly select a template for the theme
   const template = themeTemplates[Math.floor(Math.random() * themeTemplates.length)];
 
-  return template.template
+  // Get the appropriate template based on language
+  const selectedTemplate = storyData.language === 'hi' ? template.hindiTemplate : template.template;
+
+  if (!selectedTemplate) {
+    throw new Error(`No template available for language: ${storyData.language}`);
+  }
+
+  return selectedTemplate
     .replace(/{name}/g, storyData.childName)
-    .replace(/{animal}/g, storyData.animal.toLowerCase());
+    .replace(/{animal}/g, storyData.language === 'hi' ? 
+      translateAnimalToHindi(storyData.animal) : 
+      storyData.animal.toLowerCase()
+    );
+}
+
+// Helper function to translate animal names to Hindi
+function translateAnimalToHindi(animal: string): string {
+  const animalTranslations: Record<string, string> = {
+    'Lion': 'शेर',
+    'Elephant': 'हाथी',
+    'Giraffe': 'जिराफ़',
+    'Penguin': 'पेंगुइन',
+    'Rabbit': 'खरगोश',
+    'Bear': 'भालू',
+    'Fox': 'लोमड़ी',
+    'Owl': 'उल्लू',
+    'Turtle': 'कछुआ',
+    'Monkey': 'बंदर'
+  };
+  return animalTranslations[animal] || animal;
 }

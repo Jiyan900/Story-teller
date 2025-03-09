@@ -23,6 +23,7 @@ export function StoryForm() {
       animal: undefined,
       theme: undefined,
       content: "",
+      language: "en" // Added default language
     },
   });
 
@@ -145,6 +146,50 @@ export function StoryForm() {
                   </FormItem>
                 )}
               />
+
+              {/* Added Language Selection Field */}
+              <FormField
+                control={form.control}
+                name="language"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-base">Story Language</FormLabel>
+                    <Select 
+                      onValueChange={field.onChange} 
+                      value={field.value}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="h-12 text-base">
+                          <SelectValue placeholder="Select a language" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className="max-h-[300px]">
+                        <SelectItem 
+                          value="en"
+                          className="py-3 text-base cursor-pointer hover:bg-primary/10 focus:bg-primary/10"
+                        >
+                          English
+                        </SelectItem>
+                        <SelectItem 
+                          value="hi"
+                          className="py-3 text-base cursor-pointer hover:bg-primary/10 focus:bg-primary/10"
+                        >
+                          हिंदी (Hindi)
+                        </SelectItem>
+                        <SelectItem 
+                          value="bn"
+                          className="py-3 text-base cursor-pointer hover:bg-primary/10 focus:bg-primary/10"
+                        >
+                          অসমীয়া (Assamese)
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
 
               <Button 
                 type="submit" 
