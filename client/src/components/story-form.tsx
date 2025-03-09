@@ -26,7 +26,7 @@ export function StoryForm() {
     },
   });
 
-  async function onSubmit(values: Omit<InsertStory, "content">) {
+  async function onSubmit(values: InsertStory) {
     try {
       // Generate the story content
       const content = generateStory(values);
@@ -82,7 +82,10 @@ export function StoryForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Favorite Animal</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
+                    <Select 
+                      onValueChange={field.onChange} 
+                      value={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select an animal" />
@@ -107,7 +110,10 @@ export function StoryForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Story Theme</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
+                    <Select 
+                      onValueChange={field.onChange} 
+                      value={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select a theme" />
