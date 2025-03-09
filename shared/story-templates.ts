@@ -261,11 +261,11 @@ Sweet dreams, generous one. Remember that like {name}, when you share with other
 
 जैसे सभी ने साथ में भोजन का आनंद लिया, कुछ जादुई हुआ। जानवर अपनी खास प्रतिभाएं भी साझा करने लगे। पक्षियों ने गाने सिखाए, खरगोशों ने अपनी सर्वश्रेष्ठ कूदने की चालें दिखाईं, और गिलहरियों ने अपनी गुप्त मेवा खोजने की तकनीकें साझा कीं।
 
-{name} का बगीचा एक ऐसी जगह बन गया जहां सभी न केवल भोजन, बल्कि दोस्ती, ज्ञान और खुशी साझा करने के लिए एकत्र होते थे। हर दिन, और अधिक जानवर साझा करने के लिए चीजें लाते, जिससे बगीचा प्यार और उदारता से भरा जाता।
+{name} का बगीचा एक ऐसी जगह बन गया जहां सभी न केवल भोजन, बल्कि दोस्ती, ज्ञान और खुशी साझा करने के लिए एकत्र होते थे। हर दिन, और जानवर साझा करने के लिए चीजें लाते, जिससे बगीचा प्यार और उदारता से बढ़ता गया।
 
-बगीचा और भी फला-फूला क्योंकि जब सभी साझा करते और मिलकर काम करते, तो हमेशा सभी के लिए पर्याप्त होता था। {name} ने सीखा कि साझा करने से न केवल दूसरों की मदद होती है बल्कि उनका अपना दिल भी बड़ा हो जाता है।
+बगीचा और भी फला-फूला क्योंकि जब सभी ने साझा किया और मिलकर काम किया, तो सभी के लिए हमेशा पर्याप्त था। {name} ने सीखा कि साझा करने से न केवल दूसरों की मदद होती है बल्कि उनका अपना दिल भी बड़ा हो जाता है।
 
-शुभ रात्रि, उदार। याद रखो कि {name} की तरह, जब आप दूसरों के साथ साझा करते हैं, तो आप दुनिया को सभी के लिए एक बेहतर और खुशहाल जगह बनाने में मदद करते हैं।`,
+शुभ रात्रि, उदार। याद रखो कि {name} की तरह, जब आप दूसरों के साथ साझा करते हैं, तो आप सभी के लिए दुनिया को एक बेहतर और खुशहाल जगह बनाने में मदद करते हैं।`,
         minLength: 1000
       }
     ],
@@ -310,25 +310,25 @@ Remember, little one, just like {name}, you have more courage than you know. Som
     ]
   };
 
-export function generateStory(storyData: Omit<InsertStory, "content">): string {
-  const themeTemplates = templates[storyData.theme];
-  if (!themeTemplates) {
-    throw new Error(`No templates available for theme: ${storyData.theme}`);
+  export function generateStory(values: InsertStory): string {
+    const themeTemplates = templates[values.theme as keyof typeof templates];
+    if (!themeTemplates || themeTemplates.length === 0) {
+      throw new Error(`No templates found for theme: ${values.theme}`);
+    }
+
+    // Select a random template from available ones for this theme
+    const templateData = themeTemplates[Math.floor(Math.random() * themeTemplates.length)];
+    const template = values.language === 'hi' ? templateData.hindiTemplate : templateData.template;
+
+    if (!template) {
+      throw new Error(`No template found for language: ${values.language}`);
+    }
+
+    // Replace placeholders with actual values
+    return template
+      .replace(/{name}/g, values.childName)
+      .replace(/{animal}/g, values.animal);
   }
-
-  const template = themeTemplates[Math.floor(Math.random() * themeTemplates.length)];
-
-  const selectedTemplate = storyData.language === 'hi' ? template.hindiTemplate : template.template;
-
-  if (!selectedTemplate) {
-    throw new Error(`No template available for language: ${storyData.language}`);
-  }
-
-  // Replace placeholders with actual values
-  return selectedTemplate
-    .replace(/{name}/g, storyData.childName)
-    .replace(/{animal}/g, storyData.language === 'hi' ? translateAnimalToHindi(storyData.animal) : storyData.animal);
-}
 
 function translateAnimalToHindi(animal: string): string {
   const animalTranslations: Record<string, string> = {
