@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { storyFormSchema, type InsertStory, animals, storyThemes } from "@shared/schema";
-import { generateStory } from "@/lib/story-templates";
+import { generateStory } from "@shared/story-templates";
 import { apiRequest } from "@/lib/queryClient";
 
 export function StoryForm() {
