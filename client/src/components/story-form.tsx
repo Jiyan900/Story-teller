@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { storyFormSchema, type InsertStory, animals, storyThemes } from "@shared/schema";
 import { generateStory } from "@shared/story-templates";
 import { apiRequest } from "@/lib/queryClient";
+import { CharacterCustomizer, type CharacterCustomization } from "./character-customizer";
 
 export function StoryForm() {
   const [, setLocation] = useLocation();
@@ -23,9 +24,20 @@ export function StoryForm() {
       animal: undefined,
       theme: undefined,
       content: "",
-      language: "en"
+      language: "en",
+      characterCustomization: {
+        size: 5,
+        color: "Brown",
+        hasAccessory: false,
+        accessoryType: "None",
+        personality: "Playful"
+      }
     },
   });
+
+  const handleCustomizationChange = (characterCustomization: CharacterCustomization) => {
+    form.setValue("characterCustomization", characterCustomization);
+  };
 
   async function onSubmit(values: InsertStory) {
     try {
@@ -49,7 +61,7 @@ export function StoryForm() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Card className="max-w-md mx-auto bg-white/90 backdrop-blur-sm shadow-xl">
+      <Card className="max-w-xl mx-auto bg-white/90 backdrop-blur-sm shadow-xl">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center text-primary">
             Create a Magical Story
@@ -81,9 +93,19 @@ export function StoryForm() {
                 name="animal"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-base">Favorite Animal</FormLabel>
+                    <FormLabel className="text-base">Main Character</FormLabel>
                     <Select
-                      onValueChange={field.onChange}
+                      onValueChange={(value) => {
+                        field.onChange(value);
+                        // Reset customization when animal changes
+                        handleCustomizationChange({
+                          size: 5,
+                          color: "Brown",
+                          hasAccessory: false,
+                          accessoryType: "None",
+                          personality: "Playful"
+                        });
+                      }}
                       value={field.value}
                       defaultValue={field.value}
                     >
@@ -108,6 +130,14 @@ export function StoryForm() {
                   </FormItem>
                 )}
               />
+
+              {/* Character Customizer */}
+              {form.watch("animal") && (
+                <CharacterCustomizer
+                  animal={form.watch("animal")}
+                  onCustomizationChange={handleCustomizationChange}
+                />
+              )}
 
               <FormField
                 control={form.control}
@@ -142,7 +172,6 @@ export function StoryForm() {
                 )}
               />
 
-              {/* Added Language Selection Field */}
               <FormField
                 control={form.control}
                 name="language"
@@ -159,26 +188,15 @@ export function StoryForm() {
                           <SelectValue placeholder="Select a language" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="max-h-[300px]">
-                        <SelectItem
-                          value="en"
-                          className="py-3 text-base cursor-pointer hover:bg-primary/10 focus:bg-primary/10"
-                        >
-                          English
-                        </SelectItem>
-                        <SelectItem
-                          value="hi"
-                          className="py-3 text-base cursor-pointer hover:bg-primary/10 focus:bg-primary/10"
-                        >
-                          हिंदी (Hindi)
-                        </SelectItem>
+                      <SelectContent>
+                        <SelectItem value="en">English</SelectItem>
+                        <SelectItem value="hi">हिंदी (Hindi)</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-
 
               <Button
                 type="submit"

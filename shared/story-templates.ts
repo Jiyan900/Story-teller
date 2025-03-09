@@ -377,24 +377,59 @@ Remember, little one, just like {name}, you have more courage than you know. Som
     ]
 };
 
+type CharacterCustomization = {
+  size: number;
+  color: string;
+  hasAccessory: boolean;
+  accessoryType: string;
+  personality: string;
+};
+
 export function generateStory(values: InsertStory): string {
-    const themeTemplates = templates[values.theme as keyof typeof templates];
-    if (!themeTemplates || themeTemplates.length === 0) {
-        throw new Error(`No templates found for theme: ${values.theme}`);
-    }
+  const themeTemplates = templates[values.theme as keyof typeof templates];
+  if (!themeTemplates || themeTemplates.length === 0) {
+    throw new Error(`No templates found for theme: ${values.theme}`);
+  }
 
-    // Select a random template from available ones for this theme
-    const templateData = themeTemplates[Math.floor(Math.random() * themeTemplates.length)];
-    const template = values.language === 'hi' ? templateData.hindiTemplate : templateData.template;
+  // Select a random template from available ones for this theme
+  const templateData = themeTemplates[Math.floor(Math.random() * themeTemplates.length)];
+  const template = values.language === 'hi' ? templateData.hindiTemplate : templateData.template;
 
-    if (!template) {
-        throw new Error(`No template found for language: ${values.language}`);
-    }
+  if (!template) {
+    throw new Error(`No template found for language: ${values.language}`);
+  }
 
-    // Replace placeholders with actual values
-    return template
-        .replace(/{name}/g, values.childName)
-        .replace(/{animal}/g, values.animal);
+  // Helper function to generate character description
+  const getCharacterDescription = (customization: CharacterCustomization): string => {
+    const sizeDesc = customization.size > 7 ? 'big' : customization.size < 4 ? 'small' : 'medium-sized';
+    const colorDesc = customization.color.toLowerCase();
+    const accessoryDesc = customization.hasAccessory ? ` wearing a ${customization.accessoryType.toLowerCase()}` : '';
+    const personalityDesc = customization.personality.toLowerCase();
+
+    return `${sizeDesc} ${colorDesc} ${values.animal.toLowerCase()}${accessoryDesc} with a ${personalityDesc} personality`;
+  };
+
+  // Replace placeholders with actual values and add character customization
+  const storyWithBasics = template
+    .replace(/{name}/g, values.childName)
+    .replace(/{animal}/g, values.animal);
+
+  // Add character description in the first paragraph
+  const firstParagraphEnd = storyWithBasics.indexOf('\n\n');
+  if (firstParagraphEnd === -1) return storyWithBasics;
+
+  const firstPart = storyWithBasics.substring(0, firstParagraphEnd);
+  const restOfStory = storyWithBasics.substring(firstParagraphEnd);
+  const characterDesc = getCharacterDescription(values.characterCustomization);
+
+  // Insert character description after the first sentence
+  const firstSentenceEnd = firstPart.search(/[.!?]/) + 1;
+  return (
+    firstPart.substring(0, firstSentenceEnd) +
+    ` They were a ${characterDesc}.` +
+    firstPart.substring(firstSentenceEnd) +
+    restOfStory
+  );
 }
 
 function translateAnimalToHindi(animal: string): string {

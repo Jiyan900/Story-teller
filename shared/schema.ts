@@ -8,7 +8,8 @@ export const stories = pgTable("stories", {
   animal: text("animal").notNull(),
   theme: text("theme").notNull(),
   content: text("content").notNull(),
-  language: text("language").notNull().default('en'), // Add language field
+  language: text("language").notNull().default('en'),
+  characterCustomization: json("character_customization").notNull()
 });
 
 export const insertStorySchema = createInsertSchema(stories).pick({
@@ -17,6 +18,7 @@ export const insertStorySchema = createInsertSchema(stories).pick({
   theme: true,
   content: true,
   language: true,
+  characterCustomization: true,
 });
 
 export type InsertStory = z.infer<typeof insertStorySchema>;
@@ -44,6 +46,14 @@ export const animals = [
   "Monkey"
 ] as const;
 
+export const characterCustomizationSchema = z.object({
+  size: z.number().min(1).max(10),
+  color: z.string(),
+  hasAccessory: z.boolean(),
+  accessoryType: z.string(),
+  personality: z.string()
+});
+
 export const storyFormSchema = insertStorySchema.extend({
   childName: z.string().min(2, "Name must be at least 2 characters"),
   animal: z.enum(animals, {
@@ -55,4 +65,5 @@ export const storyFormSchema = insertStorySchema.extend({
   language: z.enum(['en', 'hi'], {
     required_error: "Please select a language",
   }).default('en'),
+  characterCustomization: characterCustomizationSchema
 });
