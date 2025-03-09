@@ -26,44 +26,69 @@ export function MoodLighting({ theme }: MoodLightingProps) {
       className="fixed inset-0 -z-10 overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+      transition={{ duration: 1.5, ease: "easeInOut" }}
     >
-      {/* Main gradient background */}
+      {/* Animated gradient background */}
       <motion.div
         className="absolute inset-0"
         animate={{
           background: [
-            `radial-gradient(circle at 20% 20%, ${colors[0]}33 0%, transparent 50%),
-             radial-gradient(circle at 80% 80%, ${colors[1]}33 0%, transparent 50%),
-             radial-gradient(circle at 50% 50%, ${colors[2]}33 0%, transparent 50%),
-             radial-gradient(circle at 30% 70%, ${colors[3]}33 0%, transparent 50%)`,
-            `radial-gradient(circle at 80% 20%, ${colors[1]}33 0%, transparent 50%),
-             radial-gradient(circle at 20% 80%, ${colors[2]}33 0%, transparent 50%),
-             radial-gradient(circle at 70% 30%, ${colors[3]}33 0%, transparent 50%),
-             radial-gradient(circle at 50% 50%, ${colors[0]}33 0%, transparent 50%)`
+            `radial-gradient(circle at 20% 20%, ${colors[0]}44 0%, transparent 60%),
+             radial-gradient(circle at 80% 80%, ${colors[1]}44 0%, transparent 60%),
+             radial-gradient(circle at 50% 50%, ${colors[2]}44 0%, transparent 60%),
+             radial-gradient(circle at 30% 70%, ${colors[3]}44 0%, transparent 60%)`,
+            `radial-gradient(circle at 80% 20%, ${colors[1]}44 0%, transparent 60%),
+             radial-gradient(circle at 20% 80%, ${colors[2]}44 0%, transparent 60%),
+             radial-gradient(circle at 70% 30%, ${colors[3]}44 0%, transparent 60%),
+             radial-gradient(circle at 50% 50%, ${colors[0]}44 0%, transparent 60%)`
           ]
         }}
         transition={{
-          duration: 20,
+          duration: 15,
           repeat: Infinity,
           repeatType: "reverse",
-          ease: "linear"
+          ease: "easeInOut"
         }}
       />
 
-      {/* Floating orbs */}
-      {[...Array(6)].map((_, i) => (
+      {/* Shimmering effect layer */}
+      <motion.div
+        className="absolute inset-0 mix-blend-overlay"
+        style={{
+          backgroundImage: `
+            radial-gradient(circle at 50% 50%, ${colors[0]}22 0%, transparent 50%),
+            radial-gradient(circle at 0% 0%, ${colors[1]}22 0%, transparent 50%),
+            radial-gradient(circle at 100% 100%, ${colors[2]}22 0%, transparent 50%)
+          `,
+          backgroundSize: '200px 200px',
+        }}
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0.3, 0.7, 0.3],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "easeInOut"
+        }}
+      />
+
+      {/* Dynamic floating orbs */}
+      {[...Array(12)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute rounded-full blur-xl"
+          className="absolute rounded-full blur-2xl"
           style={{
-            width: Math.random() * 200 + 100,
-            height: Math.random() * 200 + 100,
-            backgroundColor: colors[i % colors.length] + '22',
+            width: Math.random() * 300 + 100,
+            height: Math.random() * 300 + 100,
+            backgroundColor: colors[i % colors.length] + '33',
+            mixBlendMode: 'screen',
           }}
           initial={{
             x: `${Math.random() * 100}%`,
             y: `${Math.random() * 100}%`,
+            scale: 0,
           }}
           animate={{
             x: [
@@ -78,36 +103,60 @@ export function MoodLighting({ theme }: MoodLightingProps) {
               `${Math.random() * 100}%`,
               `${Math.random() * 100}%`
             ],
-            scale: [1, 1.2, 0.9, 1.1, 1],
+            scale: [1, 1.2, 0.8, 1.4, 1],
+            opacity: [0.4, 0.7, 0.3, 0.6, 0.4],
           }}
           transition={{
-            duration: 20 + i * 2,
+            duration: 25 + i * 2,
             repeat: Infinity,
             repeatType: "reverse",
-            ease: "linear"
+            ease: "easeInOut",
+            delay: i * 0.2,
           }}
         />
       ))}
 
-      {/* Pulsing overlay */}
+      {/* Interactive motion effect */}
       <motion.div
         className="absolute inset-0"
         animate={{
-          background: [
-            `radial-gradient(circle at 50% 50%, ${colors[0]}11 0%, transparent 70%)`,
-            `radial-gradient(circle at 50% 50%, ${colors[1]}11 0%, transparent 70%)`,
-            `radial-gradient(circle at 50% 50%, ${colors[2]}11 0%, transparent 70%)`,
-            `radial-gradient(circle at 50% 50%, ${colors[3]}11 0%, transparent 70%)`
+          backgroundImage: [
+            `radial-gradient(circle at 50% 50%, ${colors[0]}22 0%, transparent 70%)`,
+            `radial-gradient(circle at 50% 50%, ${colors[1]}22 0%, transparent 70%)`,
+            `radial-gradient(circle at 50% 50%, ${colors[2]}22 0%, transparent 70%)`,
+            `radial-gradient(circle at 50% 50%, ${colors[3]}22 0%, transparent 70%)`
           ],
-          scale: [1, 1.1, 1, 1.2, 1]
+          scale: [1, 1.1, 0.9, 1.2, 1],
+          rotate: [0, 5, -5, 3, 0],
         }}
         transition={{
-          duration: 10,
+          duration: 20,
           repeat: Infinity,
           repeatType: "reverse",
           ease: "easeInOut"
         }}
       />
+
+      {/* Twinkling stars effect for certain themes */}
+      {(theme === 'Adventure' || theme === 'Bedtime') && (
+        <motion.div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `radial-gradient(circle at 50% 50%, white 1px, transparent 1px)`,
+            backgroundSize: '50px 50px',
+          }}
+          animate={{
+            opacity: [0.1, 0.4, 0.1],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "easeInOut"
+          }}
+        />
+      )}
     </motion.div>
   );
 }
