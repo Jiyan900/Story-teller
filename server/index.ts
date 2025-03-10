@@ -2,11 +2,13 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import cors from "cors";
+import compression from "compression";
 
 const app = express();
 
 // Enable CORS for development
 app.use(cors());
+app.use(compression()); // Add compression middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
