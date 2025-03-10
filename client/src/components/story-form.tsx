@@ -177,7 +177,7 @@ export function StoryForm() {
               </Button>
               <div className="flex items-center justify-center gap-2 mt-4">
                 <img
-                  src="./DPS_logo_2-removebg-preview.png"
+                  src="/DPS_logo_2-removebg-preview.png"
                   alt="DPS Nagaon Logo"
                   className="h-8 w-auto object-contain"
                   onError={(e) => {
