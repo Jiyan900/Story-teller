@@ -4,30 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>Magical Bedtime Stories</title>
-    <!-- Add ResponsiveVoice script with error handling -->
+    <!-- ResponsiveVoice script must be loaded before our app -->
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=owbRrlZ3"></script>
+    <!-- Updated script tag with better initialization -->
     <script>
       window.onload = function() {
-        // Create a script element
-        var script = document.createElement('script');
-        script.src = "https://code.responsivevoice.org/responsivevoice.js?key=owbRrlZ3";
-        script.async = true;
-
-        script.onload = function() {
-          console.log('ResponsiveVoice script loaded successfully');
-          if (window.responsiveVoice) {
-            window.responsiveVoice.init();
-            console.log('ResponsiveVoice initialized');
-            // Test the voices
-            const voices = window.responsiveVoice.getVoices();
-            console.log('Available voices:', voices);
+        if (typeof responsiveVoice !== 'undefined') {
+          console.log('ResponsiveVoice is ready');
+          responsiveVoice.init();
+          // Test basic functionality
+          try {
+            responsiveVoice.speak('Test', 'US English Female', {
+              onstart: () => console.log('Test speech started'),
+              onend: () => console.log('Test speech completed'),
+              onerror: (error) => console.error('Test speech error:', error)
+            });
+          } catch (error) {
+            console.error('ResponsiveVoice test failed:', error);
           }
-        };
-
-        script.onerror = function() {
-          console.error('Failed to load ResponsiveVoice script');
-        };
-
-        document.head.appendChild(script);
+        }
       }
     </script>
   </head>
