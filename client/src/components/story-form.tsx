@@ -11,7 +11,6 @@ import { useToast } from "@/hooks/use-toast";
 import { storyFormSchema, type InsertStory, animals, storyThemes } from "@shared/schema";
 import { generateStory } from "@shared/story-templates";
 import { apiRequest } from "@/lib/queryClient";
-import { CharacterCustomizer, type CharacterCustomization } from "./character-customizer";
 
 export function StoryForm() {
   const [, setLocation] = useLocation();
@@ -24,19 +23,9 @@ export function StoryForm() {
       animal: undefined,
       theme: undefined,
       content: "",
-      language: "en",
-      characterCustomization: {
-        color: "Brown",
-        hasAccessory: false,
-        accessoryType: "None",
-        personality: "Playful"
-      }
+      language: "en"
     },
   });
-
-  const handleCustomizationChange = (characterCustomization: CharacterCustomization) => {
-    form.setValue("characterCustomization", characterCustomization);
-  };
 
   async function onSubmit(values: InsertStory) {
     try {
@@ -94,16 +83,7 @@ export function StoryForm() {
                   <FormItem>
                     <FormLabel className="text-base">Main Character</FormLabel>
                     <Select
-                      onValueChange={(value) => {
-                        field.onChange(value);
-                        // Reset customization when animal changes
-                        handleCustomizationChange({
-                          color: "Brown",
-                          hasAccessory: false,
-                          accessoryType: "None",
-                          personality: "Playful"
-                        });
-                      }}
+                      onValueChange={field.onChange}
                       value={field.value}
                       defaultValue={field.value}
                     >
@@ -128,14 +108,6 @@ export function StoryForm() {
                   </FormItem>
                 )}
               />
-
-              {/* Character Customizer */}
-              {form.watch("animal") && (
-                <CharacterCustomizer
-                  animal={form.watch("animal")}
-                  onCustomizationChange={handleCustomizationChange}
-                />
-              )}
 
               <FormField
                 control={form.control}
