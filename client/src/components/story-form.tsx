@@ -175,6 +175,9 @@ export function StoryForm() {
               >
                 {form.formState.isSubmitting ? "Creating..." : "Generate Story"}
               </Button>
+              <div className="text-center mt-4 text-sm text-muted-foreground">
+                Powered by DPS Nagaon
+              </div>
             </form>
           </Form>
         </CardContent>
