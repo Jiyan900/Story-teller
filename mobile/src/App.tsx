@@ -19,7 +19,7 @@ export default function App() {
         <Stack.Screen 
           name="Home" 
           component={HomeScreen} 
-          options={{ title: 'Magical Bedtime Stories' }}
+          options={{ title: 'Magical Stories' }}
         />
         <Stack.Screen 
           name="Story" 

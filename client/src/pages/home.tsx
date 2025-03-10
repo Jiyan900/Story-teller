@@ -12,7 +12,7 @@ export default function Home() {
     >
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-primary">
-          Magical Bedtime Stories
+          Magical Stories
         </h1>
         <p className="text-lg text-center mb-12 text-muted-foreground">
           Create a personalized bedtime story with your child's favorite animal!
