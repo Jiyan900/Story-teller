@@ -3,18 +3,44 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import cors from "cors";
 import compression from "compression";
+import rateLimit from 'express-rate-limit';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// ES Modules replacement for __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// Enable CORS for development
-app.use(cors());
-app.use(compression()); // Add compression middleware
+// Trust proxy - required for rate limiting behind reverse proxies
+app.set('trust proxy', 1);
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // limit each IP to 100 requests per windowMs
+});
+
+// Apply rate limiting to all routes
+app.use(limiter);
+
+// Enable CORS with proper error handling
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production' ? ['https://*.replit.app'] : true,
+  methods: ['GET', 'POST'],
+  credentials: true,
+}));
+
+// Add compression middleware
+app.use(compression()); 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Add health check endpoint
 app.get('/health', (_req, res) => {
-  res.json({ status: 'ok' });
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 // Request logging middleware
@@ -64,13 +90,15 @@ process.on('uncaughtException', (error) => {
     log('Starting server initialization...');
     const server = await registerRoutes(app);
 
-    if (app.get("env") === "development") {
+    if (process.env.NODE_ENV === "development") {
       log('Setting up Vite development server...');
       await setupVite(app, server).catch(error => {
         log('Vite setup warning (continuing anyway):', error);
       });
     } else {
       log('Setting up static file serving...');
+      const buildDir = path.join(__dirname, 'public');
+      fs.mkdirSync(buildDir, { recursive: true }); // Create build directory if it doesn't exist
       serveStatic(app);
     }
 
