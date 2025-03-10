@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { InsertStory } from '@shared/schema';
@@ -39,6 +40,15 @@ export function StoryScreen({ route, navigation }: Props) {
         >
           <Text style={styles.buttonText}>Create Another Story</Text>
         </TouchableOpacity>
+
+        <View style={styles.footer}>
+          <Image
+            source={require('../assets/DPS_logo_2-removebg-preview.png')}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+          <Text style={styles.footerText}>Powered by DPS Nagaon</Text>
+        </View>
       </View>
     </ScrollView>
   );
@@ -76,5 +86,20 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  footer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 16,
+    gap: 8,
+  },
+  logo: {
+    height: 32,
+    width: 32,
+  },
+  footerText: {
+    fontSize: 12,
+    color: '#6b7280',
   },
 });
