@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Play, Pause } from 'lucide-react';
+import { Play, Pause, StopCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 
@@ -79,6 +79,16 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
       >
         {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
       </Button>
+      {isPlaying && (
+        <Button
+          onClick={stop}
+          variant="outline"
+          size="icon"
+          className="w-10 h-10"
+        >
+          <StopCircle className="h-5 w-5" />
+        </Button>
+      )}
     </div>
   );
 }
