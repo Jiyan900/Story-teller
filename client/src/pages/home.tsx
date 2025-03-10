@@ -15,7 +15,7 @@ export default function Home() {
           Magical Stories
         </h1>
         <p className="text-lg text-center mb-12 text-muted-foreground">
-          Create a personalized bedtime story with your child's favorite animal!
+          Create a personalized magical story with your child's favorite animal!
         </p>
         <StoryForm />
       </div>
