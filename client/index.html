@@ -6,22 +6,11 @@
     <title>Magical Stories</title>
     <!-- ResponsiveVoice script must be loaded before our app -->
     <script src="https://code.responsivevoice.org/responsivevoice.js?key=owbRrlZ3"></script>
-    <!-- Updated script tag with better initialization -->
     <script>
       window.onload = function() {
         if (typeof responsiveVoice !== 'undefined') {
           console.log('ResponsiveVoice is ready');
           responsiveVoice.init();
-          // Test basic functionality
-          try {
-            responsiveVoice.speak('Test', 'US English Female', {
-              onstart: () => console.log('Test speech started'),
-              onend: () => console.log('Test speech completed'),
-              onerror: (error) => console.error('Test speech error:', error)
-            });
-          } catch (error) {
-            console.error('ResponsiveVoice test failed:', error);
-          }
         }
       }
     </script>
