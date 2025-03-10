@@ -8,10 +8,9 @@ interface SpeechControlsProps {
   language?: string;
 }
 
-// Updated voice mapping with appropriate voices for each language
 const voiceMap = {
-  'en': 'US English Female',
-  'hi': 'Hindi Female',
+  'en': 'UK English Female',
+  'hi': 'Hindi Female'
 };
 
 declare global {
@@ -22,6 +21,7 @@ declare global {
       isPlaying: () => boolean;
       voiceSupport: () => boolean;
       init: () => void;
+      getVoices: () => string[];
     };
   }
 }
@@ -32,43 +32,46 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
   const { toast } = useToast();
 
   useEffect(() => {
-    let checkAttempts = 0;
-    const maxAttempts = 10;
-
     const checkVoiceReady = () => {
-      console.log('Checking ResponsiveVoice availability...');
+      if (!window.responsiveVoice) {
+        console.log('ResponsiveVoice not loaded yet');
+        return false;
+      }
 
-      if (typeof window.responsiveVoice !== 'undefined') {
-        try {
-          console.log('ResponsiveVoice object found, checking support...');
-          const hasSupport = window.responsiveVoice.voiceSupport();
-          console.log('Voice support:', hasSupport);
+      try {
+        window.responsiveVoice.init();
+        const hasSupport = window.responsiveVoice.voiceSupport();
+        console.log('Voice support:', hasSupport);
 
-          window.responsiveVoice.init();
-          console.log('ResponsiveVoice initialized successfully');
+        // Test if the required voice is available
+        const voices = window.responsiveVoice.getVoices();
+        const requiredVoice = voiceMap[language as keyof typeof voiceMap];
+        const voiceAvailable = voices.includes(requiredVoice);
+        console.log(`Voice ${requiredVoice} available:`, voiceAvailable);
+
+        if (hasSupport && voiceAvailable) {
           setIsReady(true);
           return true;
-        } catch (error) {
-          console.error('ResponsiveVoice initialization error:', error);
         }
-      } else {
-        console.log('ResponsiveVoice not yet available');
+      } catch (error) {
+        console.error('ResponsiveVoice initialization error:', error);
       }
       return false;
     };
 
-    const initInterval = setInterval(() => {
-      checkAttempts++;
-      console.log(`Initialization attempt ${checkAttempts}/${maxAttempts}`);
+    // Check every second for 10 seconds
+    let attempts = 0;
+    const maxAttempts = 10;
+    const interval = setInterval(() => {
+      attempts++;
+      console.log(`Checking ResponsiveVoice (attempt ${attempts}/${maxAttempts})`);
 
-      if (checkVoiceReady() || checkAttempts >= maxAttempts) {
-        clearInterval(initInterval);
-
-        if (checkAttempts >= maxAttempts && !isReady) {
-          console.error('Failed to initialize ResponsiveVoice after maximum attempts');
+      if (checkVoiceReady() || attempts >= maxAttempts) {
+        clearInterval(interval);
+        if (attempts >= maxAttempts && !isReady) {
           toast({
-            title: "Service Unavailable",
-            description: "Text-to-speech service could not be initialized. Please refresh the page.",
+            title: "Text-to-Speech Unavailable",
+            description: "Could not initialize speech service. Please refresh the page.",
             variant: "destructive",
           });
         }
@@ -76,12 +79,12 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
     }, 1000);
 
     return () => {
-      clearInterval(initInterval);
-      if (window.responsiveVoice && isPlaying) {
-        window.responsiveVoice.cancel();
+      clearInterval(interval);
+      if (isPlaying) {
+        window.responsiveVoice?.cancel();
       }
     };
-  }, [toast, isPlaying]);
+  }, [language, isPlaying, toast]);
 
   const speak = () => {
     if (!window.responsiveVoice || !isReady) {
@@ -94,29 +97,27 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
     }
 
     try {
-      const voiceName = voiceMap[language as keyof typeof voiceMap];
-      if (!voiceName) {
-        throw new Error('Selected language not supported');
-      }
-
-      console.log('Starting speech with:', {
-        language,
-        voiceName,
-        textLength: text.length,
-        textPreview: text.substring(0, 100) + '...'
-      });
-
       // Cancel any ongoing speech
       if (isPlaying) {
         window.responsiveVoice.cancel();
       }
 
-      // Start new speech
+      const voiceName = voiceMap[language as keyof typeof voiceMap];
+      if (!voiceName) {
+        throw new Error(`Language ${language} not supported`);
+      }
+
+      console.log('Starting speech:', {
+        voice: voiceName,
+        textLength: text.length,
+        preview: text.substring(0, 50) + '...'
+      });
+
       window.responsiveVoice.speak(text, voiceName, {
         pitch: 1,
         rate: 0.9,
         onstart: () => {
-          console.log('Speech started:', { language, voiceName });
+          console.log('Speech started');
           setIsPlaying(true);
         },
         onend: () => {
@@ -144,8 +145,7 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
   };
 
   const stop = () => {
-    if (window.responsiveVoice && isPlaying) {
-      console.log('Stopping speech');
+    if (isPlaying && window.responsiveVoice) {
       window.responsiveVoice.cancel();
       setIsPlaying(false);
     }
@@ -153,11 +153,9 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
 
   if (!isReady) {
     return (
-      <div className="space-y-4">
-        <div className="flex items-center gap-2 text-muted-foreground">
-          <div className="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full" />
-          <span>Initializing text-to-speech...</span>
-        </div>
+      <div className="flex items-center gap-2 text-muted-foreground">
+        <div className="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full" />
+        <span>Initializing text-to-speech...</span>
       </div>
     );
   }
