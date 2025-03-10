@@ -11,7 +11,7 @@ interface SpeechControlsProps {
 const voiceMap = {
   'en': 'US English Female',
   'hi': 'Hindi Female'
-};
+} as const;
 
 declare global {
   interface Window {
@@ -32,6 +32,10 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
 
   const speak = () => {
     try {
+      if (typeof window === 'undefined' || !window.responsiveVoice) {
+        throw new Error('ResponsiveVoice not available');
+      }
+
       const voiceName = voiceMap[language as keyof typeof voiceMap];
       if (!voiceName) {
         throw new Error(`Language ${language} not supported`);
@@ -58,7 +62,7 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
           setIsPlaying(false);
           setIsPaused(false);
         },
-        onerror: (error) => {
+        onerror: (error: unknown) => {
           console.error('Speech error:', error);
           setIsPlaying(false);
           setIsPaused(false);
