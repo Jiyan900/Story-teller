@@ -10,8 +10,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(400).json({ message: "Invalid story data" });
     }
 
-    const story = await storage.createStory(result.data);
-    res.json(story);
+    try {
+      const story = await storage.createStory(result.data);
+      res.json(story);
+    } catch (error) {
+      console.error('Error creating story:', error);
+      res.status(500).json({ message: "Failed to create story" });
+    }
   });
 
   app.get("/api/stories/:id", async (req, res) => {
@@ -20,12 +25,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(400).json({ message: "Invalid story ID" });
     }
 
-    const story = await storage.getStory(id);
-    if (!story) {
-      return res.status(404).json({ message: "Story not found" });
+    try {
+      const story = await storage.getStory(id);
+      if (!story) {
+        return res.status(404).json({ message: "Story not found" });
+      }
+      res.json(story);
+    } catch (error) {
+      console.error('Error fetching story:', error);
+      res.status(500).json({ message: "Failed to fetch story" });
     }
-
-    res.json(story);
   });
 
   return createServer(app);
