@@ -175,8 +175,15 @@ export function StoryForm() {
               >
                 {form.formState.isSubmitting ? "Creating..." : "Generate Story"}
               </Button>
-              <div className="text-center mt-4 text-sm text-muted-foreground">
-                Powered by DPS Nagaon
+              <div className="flex items-center justify-center gap-2 mt-4">
+                <img 
+                  src="/DPS_logo_2-removebg-preview.png" 
+                  alt="DPS Nagaon Logo" 
+                  className="h-8 w-auto"
+                />
+                <span className="text-sm text-muted-foreground">
+                  Powered by DPS Nagaon
+                </span>
               </div>
             </form>
           </Form>
