@@ -9,6 +9,7 @@ interface SpeechControlsProps {
 
 export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
@@ -19,14 +20,12 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
         // Use ResponsiveVoice for web
         if (Platform.OS === 'web') {
           if (typeof window !== 'undefined' && window.responsiveVoice) {
-            console.log('Checking ResponsiveVoice availability...');
             if (!window.responsiveVoice.voiceSupport()) {
               console.log('RV: Voice synthesis not supported');
               console.log('RV: Enabling fallback mode');
             }
             if (isMounted) {
               setIsReady(true);
-              console.log('ResponsiveVoice initialized successfully');
             }
           }
         } else {
@@ -62,43 +61,75 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
     try {
       if (!isReady) return;
 
+      if (isPaused) {
+        if (Platform.OS === 'web') {
+          window.responsiveVoice.resume();
+        } else {
+          const Tts = require('@react-native-community/tts').default;
+          await Tts.resume();
+        }
+        setIsPaused(false);
+        setIsPlaying(true);
+        return;
+      }
+
       setIsPlaying(true);
-      console.log('Selected text', text);
+      setIsPaused(false);
 
       if (Platform.OS === 'web') {
-        // Web: Use ResponsiveVoice
         if (window.responsiveVoice) {
           window.responsiveVoice.speak(text, 
             language === 'hi' ? 'Hindi Female' : 'UK English Female',
             {
               pitch: 1,
               rate: 0.9,
-              onend: () => setIsPlaying(false),
+              onend: () => {
+                setIsPlaying(false);
+                setIsPaused(false);
+              },
               onerror: (error) => {
                 console.error('Speech error:', error);
                 setIsPlaying(false);
+                setIsPaused(false);
               }
             }
           );
         }
       } else {
-        // Mobile: Use React Native TTS
         const Tts = require('@react-native-community/tts').default;
         await Tts.speak(text, {
           language: language === 'hi' ? 'hi-IN' : 'en-US',
           pitch: 1,
           rate: 0.8,
-          onDone: () => setIsPlaying(false),
+          onDone: () => {
+            setIsPlaying(false);
+            setIsPaused(false);
+          },
           onError: (error) => {
             console.error('TTS error:', error);
             setIsPlaying(false);
+            setIsPaused(false);
           }
         });
       }
     } catch (error) {
       console.error('Speech error:', error);
       setIsPlaying(false);
+      setIsPaused(false);
     }
+  };
+
+  const pause = () => {
+    if (Platform.OS === 'web') {
+      if (window.responsiveVoice) {
+        window.responsiveVoice.pause();
+      }
+    } else {
+      const Tts = require('@react-native-community/tts').default;
+      Tts.pause();
+    }
+    setIsPaused(true);
+    setIsPlaying(false);
   };
 
   const stop = () => {
@@ -111,21 +142,35 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
       Tts.stop();
     }
     setIsPlaying(false);
+    setIsPaused(false);
   };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity 
-        onPress={isPlaying ? stop : speak}
+        onPress={isPaused ? speak : (isPlaying ? pause : speak)}
         style={styles.button}
         disabled={!isReady}
       >
         <Icon 
-          name={isPlaying ? "stop" : "play-arrow"} 
+          name={isPaused ? "play-arrow" : (isPlaying ? "pause" : "play-arrow")}
           size={24} 
           color={isReady ? "#7c3aed" : "#9ca3af"}
         />
       </TouchableOpacity>
+      {(isPlaying || isPaused) && (
+        <TouchableOpacity 
+          onPress={stop}
+          style={styles.button}
+          disabled={!isReady}
+        >
+          <Icon 
+            name="stop" 
+            size={24} 
+            color={isReady ? "#7c3aed" : "#9ca3af"}
+          />
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
