@@ -79,14 +79,23 @@ process.on('uncaughtException', (error) => {
     const host = "0.0.0.0";
 
     await new Promise<void>((resolve, reject) => {
-      server.listen({
-        port,
-        host,
-        reusePort: true,
-      }, () => {
-        log(`Server running at http://${host}:${port}`);
-        resolve();
-      }).on('error', reject);
+      try {
+        log('Attempting to start server...');
+        server.listen({
+          port,
+          host,
+          reusePort: true,
+        }, () => {
+          log(`✨ Server running at http://${host}:${port}`);
+          resolve();
+        }).on('error', (error) => {
+          log(`❌ Server startup error: ${error.message}`);
+          reject(error);
+        });
+      } catch (error) {
+        log(`❌ Failed to start server: ${error}`);
+        reject(error);
+      }
     });
 
     // Handle server errors
