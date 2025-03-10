@@ -17,7 +17,6 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
 
     const initSpeech = async () => {
       try {
-        // Use ResponsiveVoice for web
         if (Platform.OS === 'web') {
           if (typeof window !== 'undefined' && window.responsiveVoice) {
             if (!window.responsiveVoice.voiceSupport()) {
@@ -29,11 +28,8 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
             }
           }
         } else {
-          // Use React Native TTS for mobile
           const Tts = require('@react-native-community/tts').default;
           await Tts.setDefaultLanguage(language === 'hi' ? 'hi-IN' : 'en-US');
-          const voices = await Tts.voices();
-          console.log('Available voices:', voices);
           if (isMounted) {
             setIsReady(true);
           }
@@ -57,25 +53,8 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
     };
   }, [language]);
 
-  const speak = async () => {
+  const startNewSpeech = async () => {
     try {
-      if (!isReady) return;
-
-      if (isPaused) {
-        if (Platform.OS === 'web') {
-          window.responsiveVoice.resume();
-        } else {
-          const Tts = require('@react-native-community/tts').default;
-          await Tts.resume();
-        }
-        setIsPaused(false);
-        setIsPlaying(true);
-        return;
-      }
-
-      setIsPlaying(true);
-      setIsPaused(false);
-
       if (Platform.OS === 'web') {
         if (window.responsiveVoice) {
           window.responsiveVoice.speak(text, 
@@ -119,17 +98,58 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
     }
   };
 
-  const pause = () => {
-    if (Platform.OS === 'web') {
-      if (window.responsiveVoice) {
-        window.responsiveVoice.pause();
+  const speak = async () => {
+    try {
+      if (!isReady) return;
+
+      if (isPaused) {
+        try {
+          if (Platform.OS === 'web') {
+            window.responsiveVoice.resume();
+          } else {
+            const Tts = require('@react-native-community/tts').default;
+            await Tts.resume();
+          }
+          setIsPaused(false);
+          setIsPlaying(true);
+        } catch (error) {
+          console.error('Resume error:', error);
+          // If resume fails, restart from beginning
+          setIsPlaying(true);
+          setIsPaused(false);
+          await startNewSpeech();
+        }
+        return;
       }
-    } else {
-      const Tts = require('@react-native-community/tts').default;
-      Tts.pause();
+
+      // Start new speech
+      setIsPlaying(true);
+      setIsPaused(false);
+      await startNewSpeech();
+    } catch (error) {
+      console.error('Speech error:', error);
+      setIsPlaying(false);
+      setIsPaused(false);
     }
-    setIsPaused(true);
-    setIsPlaying(false);
+  };
+
+  const pause = async () => {
+    try {
+      if (Platform.OS === 'web') {
+        if (window.responsiveVoice) {
+          window.responsiveVoice.pause();
+        }
+      } else {
+        const Tts = require('@react-native-community/tts').default;
+        await Tts.pause();
+      }
+      setIsPaused(true);
+      setIsPlaying(false);
+    } catch (error) {
+      console.error('Pause error:', error);
+      // If pause fails, stop completely
+      stop();
+    }
   };
 
   const stop = () => {

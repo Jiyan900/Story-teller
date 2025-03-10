@@ -21,6 +21,7 @@ declare global {
       resume: () => void;
       cancel: () => void;
       isPlaying: () => boolean;
+      getPosition: () => number;
     };
   }
 }
@@ -42,37 +43,19 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
       }
 
       if (isPaused) {
-        window.responsiveVoice.resume();
-        setIsPaused(false);
-        setIsPlaying(true);
+        try {
+          window.responsiveVoice.resume();
+          setIsPaused(false);
+          setIsPlaying(true);
+        } catch (error) {
+          console.error('Resume error:', error);
+          // If resume fails, restart from beginning
+          startNewSpeech();
+        }
         return;
       }
 
-      // Cancel any ongoing speech
-      if (isPlaying) {
-        window.responsiveVoice.cancel();
-      }
-
-      window.responsiveVoice.speak(text, voiceName, {
-        onstart: () => {
-          setIsPlaying(true);
-          setIsPaused(false);
-        },
-        onend: () => {
-          setIsPlaying(false);
-          setIsPaused(false);
-        },
-        onerror: (error: unknown) => {
-          console.error('Speech error:', error);
-          setIsPlaying(false);
-          setIsPaused(false);
-          toast({
-            title: "Speech Error",
-            description: "Failed to play speech. Please try again.",
-            variant: "destructive",
-          });
-        }
-      });
+      startNewSpeech();
     } catch (error) {
       console.error('Speech error:', error);
       toast({
@@ -83,11 +66,46 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
     }
   };
 
+  const startNewSpeech = () => {
+    // Cancel any ongoing speech
+    if (isPlaying) {
+      window.responsiveVoice.cancel();
+    }
+
+    const voiceName = voiceMap[language as keyof typeof voiceMap];
+    window.responsiveVoice.speak(text, voiceName, {
+      onstart: () => {
+        setIsPlaying(true);
+        setIsPaused(false);
+      },
+      onend: () => {
+        setIsPlaying(false);
+        setIsPaused(false);
+      },
+      onerror: (error: unknown) => {
+        console.error('Speech error:', error);
+        setIsPlaying(false);
+        setIsPaused(false);
+        toast({
+          title: "Speech Error",
+          description: "Failed to play speech. Please try again.",
+          variant: "destructive",
+        });
+      }
+    });
+  };
+
   const pause = () => {
     if (isPlaying && !isPaused) {
-      window.responsiveVoice.pause();
-      setIsPaused(true);
-      setIsPlaying(false);
+      try {
+        window.responsiveVoice.pause();
+        setIsPaused(true);
+        setIsPlaying(false);
+      } catch (error) {
+        console.error('Pause error:', error);
+        // If pause fails, stop completely
+        stop();
+      }
     }
   };
 
