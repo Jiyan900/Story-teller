@@ -24,7 +24,11 @@ export type Story = typeof stories.$inferSelect;
 
 export const storyThemes = [
   "Adventure",
-  "Bedtime"
+  "Bedtime",
+  "Friendship",
+  "Kindness",
+  "Courage",
+  "Sharing"
 ] as const;
 
 export const animals = [

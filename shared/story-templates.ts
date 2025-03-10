@@ -87,6 +87,118 @@ Goodnight, little one. Like {name}, may your dreams be filled with wonder and yo
 शुभ रात्रि, छोटे। {name} की तरह, आपके सपने भी आश्चर्य से भरे हों और आपकी नींद शांतिपूर्ण और गर्म हो।`,
                     minLength: 1000
                 }
+            ],
+            Friendship: [
+                {
+                    template: `Once upon a time, in a magical forest, there lived a young {animal} named {name}. {name} was a very special {animal} who loved making new friends, but sometimes felt a little shy.
+
+One sunny morning, while playing near the crystal-clear stream, {name} heard gentle rustling in the bushes. To their surprise, they discovered other young animals who were also looking for friendship.
+
+Together with their new friends, {name} went on amazing adventures. They built cozy hideouts from fallen leaves, shared delicious berries, and told funny stories under the twinkling stars.
+
+As days passed, {name} learned that true friendship means being there for each other, sharing both happy and challenging moments. The little {animal} realized that everyone has something special to offer, and that's what makes friendship so magical.
+
+Every evening, when the moon rose high in the sky, {name} would gather with their forest friends to share stories about their day. They would laugh, play, and dream about tomorrow's adventures.
+
+The forest became a happier place because of {name}'s kindness and friendly nature. Other animals often said that meeting {name} was like finding a treasure - a true friend who made every day brighter.
+
+And so, {name} the {animal} discovered that the best gift in the world is having good friends who care about you, just as you care about them.
+
+Sweet dreams, little one. Remember, just like {name}, you too can make wonderful friends by being kind and sharing your heart with others.`,
+                    hindiTemplate: `एक समय की बात है, एक जादुई जंगल में एक छोटा {animal} रहता था जिसका नाम {name} था। {name} एक बहुत ही खास {animal} था जो नए दोस्त बनाना पसंद करता था, लेकिन कभी-कभी थोड़ा शर्मीला महसूस करता था।
+
+एक सुनहरी सुबह, क्रिस्टल जैसी स्वच्छ नदी के पास खेलते हुए, {name} को झाड़ियों में हलकी सरसराहट सुनाई दी। उन्हें आश्चर्य हुआ जब उन्होंने देखा कि अन्य युवा जानवर भी दोस्ती की तलाश में थे।
+
+अपने नए दोस्तों के साथ, {name} ने अद्भुत साहसिक कार्यों में हिस्सा लिया। उन्होंने गिरी हुई पत्तियों से आरामदायक छिपने की जगह बनाई, स्वादिष्ट बेरीज़ साझा कीं, और टिमटिमाते तारों के नीचे मजेदार कहानियां सुनाईं।
+
+जैसे-जैसे दिन बीते, {name} ने सीखा कि सच्ची दोस्ती का मतलब है एक-दूसरे के लिए मौजूद रहना, खुशी और चुनौतीपूर्ण पलों को साझा करना। छोटे {animal} को एहसास हुआ कि हर किसी में कुछ खास है, और यही दोस्ती को जादुई बनाता है।
+
+हर शाम, जब चांद आसमान में ऊंचा उठता, {name} अपने जंगल के दोस्तों के साथ दिन की कहानियां साझा करने के लिए इकट्ठा होता। वे हंसते, खेलते और कल के साहसिक कार्यों के सपने देखते।
+
+{name} की दयालुता और मैत्रीपूर्ण स्वभाव की वजह से जंगल एक खुशहाल जगह बन गया। अन्य जानवर अक्सर कहते थे कि {name} से मिलना खजाना पाने जैसा था - एक सच्चा दोस्त जो हर दिन को और भी खूबसूरत बनाता है।
+
+और इस तरह, {name} नाम के {animal} ने पाया कि दुनिया का सबसे बड़ा तोहफा है अच्छे दोस्तों का होना जो आपकी परवाह करते हैं, जैसे आप उनकी परवाह करते हैं।
+
+शुभ रात्रि, छोटे। याद रखो, {name} की तरह, तुम भी दूसरों के प्रति दयालु बनकर और अपना दिल साझा करके अद्भुत दोस्त बना सकते हो।`,
+                    minLength: 1000
+                }
+            ],
+            Kindness: [
+                {
+                    template: `In a beautiful meadow where flowers danced in the breeze, there lived a gentle {animal} named {name}. {name} had the biggest heart in all the land and loved helping others.
+
+One day, {name} noticed that some of the smaller animals were having trouble reaching the sweetest berries that grew high up in the trees. Without hesitation, {name} decided to help them.
+
+Using their special {animal} abilities, {name} found creative ways to help everyone get their share of the delicious berries. They made sure no one was left out, and soon the meadow was filled with happy animals enjoying their treats.
+
+Word spread about {name}'s kindness, and soon animals from all around would come seeking help. Whether it was helping a lost butterfly find its way home, or sharing an umbrella with a wet rabbit during rain, {name} was always there to lend a helping hand.
+
+The other animals started following {name}'s example. They learned that being kind not only made others happy but filled their own hearts with joy too. The meadow became known as the kindest place in all the land.
+
+Sweet dreams, little one. Remember that like {name}, you too have the power to make the world a kinder place with your actions and words.`,
+                    hindiTemplate: `एक सुंदर मैदान में जहाँ फूल हवा में नाचते थे, एक दयालु {animal} रहता था जिसका नाम {name} था। {name} के पास पूरी धरती में सबसे बड़ा दिल था और वह दूसरों की मदद करना पसंद करता था।
+
+एक दिन, {name} ने देखा कि कुछ छोटे जानवरों को पेड़ों पर ऊंचाई पर लगे मीठे बेर तक पहुंचने में परेशानी हो रही थी। बिना किसी हिचकिचाहट के, {name} ने उनकी मदद करने का फैसला किया।
+
+अपनी विशेष {animal} क्षमताओं का उपयोग करते हुए, {name} ने हर किसी को स्वादिष्ट बेर का हिस्सा दिलाने के रचनात्मक तरीके खोजे। उन्होंने सुनिश्चित किया कि कोई भी छूटे नहीं, और जल्द ही मैदान खुश जानवरों से भर गया जो अपने मिठाइयों का आनंद ले रहे थे।
+
+{name} की दयालुता की खबर फैल गई, और जल्द ही चारों ओर से जानवर मदद मांगने आने लगे। चाहे खोई हुई तितली को घर का रास्ता खोजने में मदद करना हो, या बारिश के दौरान गीले खरगोश के साथ छाता साझा करना हो, {name} हमेशा मदद के लिए तैयार रहता था।
+
+अन्य जानवर {name} के उदाहरण का अनुसरण करने लगे। उन्होंने सीखा कि दयालु होने से न केवल दूसरे खुश होते हैं बल्कि उनका अपना दिल भी खुशी से भर जाता है। मैदान सभी भूमि में सबसे दयालु स्थान के रूप में जाना जाने लगा।
+
+शुभ रात्रि, छोटे। याद रखो, {name} की तरह, तुम्हारे पास भी अपने कार्यों और शब्दों से दुनिया को एक दयालु स्थान बनाने की शक्ति है।`,
+                    minLength: 1000
+                }
+            ],
+            Courage: [
+                {
+                    template: `In a land of rolling hills and towering mountains, there lived a young {animal} named {name}. Though {name} was small, they had a heart full of courage waiting to shine.
+
+One stormy day, {name} heard a cry for help coming from the misty valley. Though the path looked scary and uncertain, {name} knew they had to be brave and help whoever was in need.
+
+Step by step, {name} ventured into the valley, their heart beating fast but their determination stronger. Through the fog, they found a young eagle with a hurt wing, unable to fly back to its nest high in the mountains.
+
+Despite their own fears, {name} stayed with the eagle, keeping it warm and safe through the storm. They shared stories of bravery and adventure, helping the eagle stay hopeful until help could arrive.
+
+When the storm finally cleared, the eagle's family found them, grateful for {name}'s courage and kindness. From that day on, {name} realized that being brave didn't mean not feeling scared - it meant doing what's right even when you're afraid.
+
+Sweet dreams, brave one. Remember that like {name}, you too have courage inside you, ready to shine when others need help.`,
+                    hindiTemplate: `पहाड़ियों और ऊंचे पर्वतों की एक धरती में, एक युवा {animal} रहता था जिसका नाम {name} था। हालांकि {name} छोटा था, उसके दिल में साहस भरा था जो चमकने के लिए तैयार था।
+
+एक तूफानी दिन, {name} ने धुंधभरी घाटी से मदद की पुकार सुनी। हालांकि रास्ता डरावना और अनिश्चित लग रहा था, {name} जानता था कि उसे बहादुर बनना होगा और जरूरतमंद की मदद करनी होगी।
+
+कदम-कदम करके, {name} घाटी में आगे बढ़ा, उसका दिल तेजी से धड़क रहा था लेकिन उसका संकल्प मजबूत था। कोहरे के बीच, उन्हें एक युवा चील मिला जिसके पंख में चोट लगी थी, और वह पहाड़ों में ऊंचे अपने घोंसले तक नहीं उड़ सकता था।
+
+अपने डर के बावजूद, {name} चील के साथ रहा, उसे तूफान के दौरान गरम और सुरक्षित रखा। उन्होंने साहस और साहसिक कार्यों की कहानियां साझा कीं, मदद आने तक चील को उम्मीदवार बनाए रखा।
+
+जब आखिरकार तूफान थम गया, चील का परिवार उन्हें ढूंढ लिया, {name} के साहस और दयालुता के लिए कृतज्ञ था। उस दिन से, {name} को एहसास हुआ कि बहादुर होने का मतलब डर महसूस न करना नहीं है - इसका मतलब है डर के बावजूद सही काम करना।
+
+शुभ रात्रि, बहादुर। याद रखो कि {name} की तरह, तुम्हारे अंदर भी साहस है, जो दूसरों को मदद की जरूरत होने पर चमकने के लिए तैयार है।`,
+                    minLength: 1000
+                }
+            ],
+            Sharing: [
+                {
+                    template: `In a cozy corner of the forest, there lived a thoughtful {animal} named {name}. {name} had a wonderful collection of treasures - colorful leaves, shiny pebbles, and sweet berries that they loved to share with others.
+
+One autumn day, {name} noticed that many of the forest animals were preparing for winter, but some had trouble finding enough food to store. Without hesitation, {name} decided to share their berry collection with everyone who needed help.
+
+{name} organized a big sharing festival, where everyone brought what they could to share. Some brought nuts, others brought warm moss for nests, and {name} taught everyone how sharing made the whole forest a happier place.
+
+As winter approached, the forest animals realized that by sharing and helping each other, they had created something more valuable than any treasure - they had created a community where everyone cared for each other.
+
+Sweet dreams, generous one. Remember that like {name}, sharing your gifts with others makes the world a better place for everyone.`,
+                    hindiTemplate: `जंगल के एक आरामदायक कोने में, एक विचारशील {animal} रहता था जिसका नाम {name} था। {name} के पास खजानों का एक अद्भुत संग्रह था - रंगीन पत्तियां, चमकीले कंकड़, और मीठी बेरियां जो वह दूसरों के साथ साझा करना पसंद करता था।
+
+एक शरद ऋतु के दिन, {name} ने देखा कि कई जंगली जानवर सर्दियों की तैयारी कर रहे थे, लेकिन कुछ को स्टोर करने के लिए पर्याप्त भोजन खोजने में परेशानी हो रही थी। बिना किसी हिचकिचाहट के, {name} ने अपना बेरी संग्रह हर जरूरतमंद के साथ साझा करने का फैसला किया।
+
+{name} ने एक बड़ा शेयरिंग उत्सव आयोजित किया, जहां हर कोई साझा करने के लिए जो कुछ भी ला सकता था। कुछ मेवे लाए, कुछ घोंसलों के लिए गर्म मॉस लाए, और {name} ने सभी को सिखाया कि कैसे साझा करने से पूरा जंगल एक खुशहाल जगह बन गया।
+
+जैसे-जैसे सर्दी नजदीक आई, जंगल के जानवरों को एहसास हुआ कि एक-दूसरे की मदद करके और साझा करके, उन्होंने किसी भी खजाने से ज्यादा कीमती कुछ बनाया था - उन्होंने एक ऐसा समुदाय बनाया था जहां हर कोई एक-दूसरे की परवाह करता था।
+
+शुभ रात्रि, उदार। याद रखो कि {name} की तरह, दूसरों के साथ अपनी चीजें साझा करने से दुनिया सभी के लिए एक बेहतर जगह बनती है।`,
+                    minLength: 1000
+                }
             ]
         };
 
