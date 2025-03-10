@@ -97,9 +97,14 @@ process.on('uncaughtException', (error) => {
       });
     } else {
       log('Setting up static file serving...');
-      const buildDir = path.join(__dirname, 'public');
+      const buildDir = path.join(__dirname, '..', 'client', 'dist');
       fs.mkdirSync(buildDir, { recursive: true }); // Create build directory if it doesn't exist
-      serveStatic(app);
+      app.use(express.static(buildDir));
+
+      // Serve index.html for all routes (SPA fallback)
+      app.get('*', (_req, res) => {
+        res.sendFile(path.join(buildDir, 'index.html'));
+      });
     }
 
     // ALWAYS serve the app on port 5000 and bind to 0.0.0.0
