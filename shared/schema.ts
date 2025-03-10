@@ -23,12 +23,8 @@ export type InsertStory = z.infer<typeof insertStorySchema>;
 export type Story = typeof stories.$inferSelect;
 
 export const storyThemes = [
-  "Friendship",
-  "Kindness",
-  "Courage",
-  "Sharing",
-  "Bedtime",
-  "Adventure"
+  "Adventure",
+  "Bedtime"
 ] as const;
 
 export const animals = [
