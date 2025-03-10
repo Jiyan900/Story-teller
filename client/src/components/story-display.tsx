@@ -72,17 +72,23 @@ function DecoElement({
   color?: string;
   delay?: number;
 }) {
+  const animationWithFade = {
+    ...animate,
+    opacity: 1,
+    scale: 1,
+    transition: {
+      ...animate.transition,
+      delay,
+      opacity: { delay, duration: 0.5 },
+      scale: { delay, duration: 0.5 }
+    }
+  };
+
   return (
     <motion.div
       className={`absolute ${className}`}
-      animate={animate}
       initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ 
-        delay,
-        duration: 0.5,
-        ease: "easeOut"
-      }}
+      animate={animationWithFade}
     >
       <Icon size={size} className="text-primary/40" color={color} />
     </motion.div>
