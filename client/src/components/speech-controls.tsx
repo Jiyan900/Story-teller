@@ -40,6 +40,10 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
 
       if (typeof window.responsiveVoice !== 'undefined') {
         try {
+          console.log('ResponsiveVoice object found, checking support...');
+          const hasSupport = window.responsiveVoice.voiceSupport();
+          console.log('Voice support:', hasSupport);
+
           window.responsiveVoice.init();
           console.log('ResponsiveVoice initialized successfully');
           setIsReady(true);
@@ -47,12 +51,15 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
         } catch (error) {
           console.error('ResponsiveVoice initialization error:', error);
         }
+      } else {
+        console.log('ResponsiveVoice not yet available');
       }
       return false;
     };
 
     const initInterval = setInterval(() => {
       checkAttempts++;
+      console.log(`Initialization attempt ${checkAttempts}/${maxAttempts}`);
 
       if (checkVoiceReady() || checkAttempts >= maxAttempts) {
         clearInterval(initInterval);
@@ -70,32 +77,11 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
 
     return () => {
       clearInterval(initInterval);
-      if (window.responsiveVoice) {
+      if (window.responsiveVoice && isPlaying) {
         window.responsiveVoice.cancel();
       }
     };
-  }, [toast]);
-
-  const testVoice = () => {
-    try {
-      if (typeof window.responsiveVoice !== 'undefined') {
-        window.responsiveVoice.speak('Testing text to speech', voiceMap[language as keyof typeof voiceMap], {
-          onstart: () => console.log('Test speech started'),
-          onend: () => console.log('Test speech completed'),
-          onerror: (error: any) => console.error('Test speech error:', error)
-        });
-      } else {
-        throw new Error('ResponsiveVoice not available');
-      }
-    } catch (error) {
-      console.error('Test speech failed:', error);
-      toast({
-        title: "Test Failed",
-        description: "Could not test text-to-speech. Service may not be available.",
-        variant: "destructive",
-      });
-    }
-  };
+  }, [toast, isPlaying]);
 
   const speak = () => {
     if (!window.responsiveVoice || !isReady) {
@@ -113,13 +99,24 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
         throw new Error('Selected language not supported');
       }
 
+      console.log('Starting speech with:', {
+        language,
+        voiceName,
+        textLength: text.length,
+        textPreview: text.substring(0, 100) + '...'
+      });
+
       // Cancel any ongoing speech
-      window.responsiveVoice.cancel();
+      if (isPlaying) {
+        window.responsiveVoice.cancel();
+      }
 
       // Start new speech
       window.responsiveVoice.speak(text, voiceName, {
+        pitch: 1,
+        rate: 0.9,
         onstart: () => {
-          console.log('Speech started:', language);
+          console.log('Speech started:', { language, voiceName });
           setIsPlaying(true);
         },
         onend: () => {
@@ -147,7 +144,8 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
   };
 
   const stop = () => {
-    if (window.responsiveVoice) {
+    if (window.responsiveVoice && isPlaying) {
+      console.log('Stopping speech');
       window.responsiveVoice.cancel();
       setIsPlaying(false);
     }
@@ -160,9 +158,6 @@ export function SpeechControls({ text, language = 'en' }: SpeechControlsProps) {
           <div className="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full" />
           <span>Initializing text-to-speech...</span>
         </div>
-        <Button onClick={testVoice} variant="outline" size="sm">
-          Test Speech
-        </Button>
       </div>
     );
   }
