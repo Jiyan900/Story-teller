@@ -49,6 +49,14 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   res.status(status).json({ message });
 });
 
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+});
+
 (async () => {
   try {
     log('Starting server initialization...');
@@ -56,7 +64,9 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
 
     if (app.get("env") === "development") {
       log('Setting up Vite development server...');
-      await setupVite(app, server);
+      await setupVite(app, server).catch(error => {
+        log('Vite setup warning (continuing anyway):', error);
+      });
     } else {
       log('Setting up static file serving...');
       serveStatic(app);
@@ -66,12 +76,15 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const port = 5000;
     const host = "0.0.0.0";
 
-    server.listen({
-      port,
-      host,
-      reusePort: true,
-    }, () => {
-      log(`Server running at http://${host}:${port}`);
+    await new Promise<void>((resolve, reject) => {
+      server.listen({
+        port,
+        host,
+        reusePort: true,
+      }, () => {
+        log(`Server running at http://${host}:${port}`);
+        resolve();
+      }).on('error', reject);
     });
 
     // Handle server errors
