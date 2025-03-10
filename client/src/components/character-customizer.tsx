@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 
 interface CharacterCustomizerProps {
@@ -12,7 +11,6 @@ interface CharacterCustomizerProps {
 }
 
 export interface CharacterCustomization {
-  size: number;  // 1-10 scale
   color: string;
   hasAccessory: boolean;
   accessoryType: string;
@@ -56,7 +54,6 @@ const personalityOptions = [
 
 export function CharacterCustomizer({ animal, onCustomizationChange }: CharacterCustomizerProps) {
   const [customization, setCustomization] = useState<CharacterCustomization>({
-    size: 5,
     color: colorOptions[animal as keyof typeof colorOptions]?.[0] || 'Brown',
     hasAccessory: false,
     accessoryType: accessoryOptions[animal as keyof typeof accessoryOptions]?.[0] || 'None',
@@ -77,24 +74,6 @@ export function CharacterCustomizer({ animal, onCustomizationChange }: Character
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Size Slider */}
-        <div className="space-y-2">
-          <Label>Size</Label>
-          <Slider
-            value={[customization.size]}
-            min={1}
-            max={10}
-            step={1}
-            onValueChange={([size]) => handleCustomizationChange({ size })}
-            className="w-full"
-          />
-          <div className="flex justify-between text-sm text-muted-foreground">
-            <span>Small</span>
-            <span>Medium</span>
-            <span>Large</span>
-          </div>
-        </div>
-
         {/* Color Selection */}
         <div className="space-y-2">
           <Label>Color</Label>
@@ -168,8 +147,7 @@ export function CharacterCustomizer({ animal, onCustomizationChange }: Character
         <div className="mt-6 p-4 rounded-lg bg-primary/5 border border-primary/10">
           <h3 className="text-sm font-medium mb-2">Preview:</h3>
           <p className="text-sm text-muted-foreground">
-            A {customization.size > 7 ? 'big' : customization.size < 4 ? 'small' : 'medium-sized'}{' '}
-            {customization.color.toLowerCase()} {animal.toLowerCase()}{' '}
+            A {customization.color.toLowerCase()} {animal.toLowerCase()}{' '}
             {customization.hasAccessory && `wearing a ${customization.accessoryType.toLowerCase()}`}{' '}
             with a {customization.personality.toLowerCase()} personality
           </p>

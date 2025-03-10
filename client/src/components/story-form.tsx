@@ -26,7 +26,6 @@ export function StoryForm() {
       content: "",
       language: "en",
       characterCustomization: {
-        size: 5,
         color: "Brown",
         hasAccessory: false,
         accessoryType: "None",
@@ -99,7 +98,6 @@ export function StoryForm() {
                         field.onChange(value);
                         // Reset customization when animal changes
                         handleCustomizationChange({
-                          size: 5,
                           color: "Brown",
                           hasAccessory: false,
                           accessoryType: "None",

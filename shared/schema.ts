@@ -47,7 +47,6 @@ export const animals = [
 ] as const;
 
 export const characterCustomizationSchema = z.object({
-  size: z.number().min(1).max(10),
   color: z.string(),
   hasAccessory: z.boolean(),
   accessoryType: z.string(),
