@@ -15,14 +15,28 @@ export class MemStorage implements IStorage {
   }
 
   async createStory(insertStory: InsertStory): Promise<Story> {
-    const id = this.currentId++;
-    const story: Story = { ...insertStory, id };
-    this.stories.set(id, story);
-    return story;
+    try {
+      const id = this.currentId++;
+      const story: Story = { 
+        ...insertStory, 
+        id,
+        language: insertStory.language || 'en'  // Ensure language has a default value
+      };
+      this.stories.set(id, story);
+      return story;
+    } catch (error) {
+      console.error('Error in createStory:', error);
+      throw error;
+    }
   }
 
   async getStory(id: number): Promise<Story | undefined> {
-    return this.stories.get(id);
+    try {
+      return this.stories.get(id);
+    } catch (error) {
+      console.error('Error in getStory:', error);
+      throw error;
+    }
   }
 }
 
